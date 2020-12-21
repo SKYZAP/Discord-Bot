@@ -1,4 +1,4 @@
-export const penisCommand = (args) => {
+export const penisCommand = (message, args) => {
   const length = Math.floor(Math.random() * 24);
-  return length.toString();
+  message.reply("Your penis is " + length.toString() + " inches");
 };
