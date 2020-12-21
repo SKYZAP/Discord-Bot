@@ -1,4 +1,5 @@
-const Discord = require("discord.js");
+import { penisCommand } from "./components/penis/index.js";
+import Discord from "discord.js";
 
 const discordBot = new Discord.Client();
 
@@ -18,6 +19,8 @@ discordBot.on("message", (message) => {
     message.channel.send("ben is gay");
   } else if (command === "lie") {
     message.channel.send("the one who typed that command is gay");
+  } else if (command === "penis") {
+    message.channel.send(penisCommand());
   }
 });
 
