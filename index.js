@@ -7,7 +7,7 @@ const discordBot = new Discord.Client();
 const prefix = "/";
 
 discordBot.once("ready", () => {
-  console.log("Berd is the word!");
+  console.log("[BerdBot] Ready to go!");
 });
 
 discordBot.on("message", (message) => {
