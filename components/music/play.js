@@ -4,11 +4,11 @@ import ytSearch from "yt-search";
 export const musicPlay = async(message, args) => {
     const voiceChannel = message.member.voice.channel;
 
-    if (!voiceChannel) return message.channel.send('You are not from around here are you?');
+    if (!voiceChannel) return message.channel.send('You need to be in the voice channel');
     const permissions = voiceChannel.permissionsFor(message.client.user);
-    if (!permissions.has('CONNECT')) return message.channel.send('You do not have the power within you');
-    if (!permissions.has('SPEAK')) return message.channel.send('You are truly powerless');
-    if (!args.length) return message.channel.send('Say it with your chest!');
+    if (!permissions.has('CONNECT')) return message.channel.send('You need permission from the');
+    if (!permissions.has('SPEAK')) return message.channel.send('You do not have permission');
+    if (!args.length) return message.channel.send('You need to add a song name!');
 
     const connection = await voiceChannel.join();
 

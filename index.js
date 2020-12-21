@@ -2,6 +2,7 @@ import { penisCommand } from "./components/penis/index.js";
 
 import Discord from "discord.js";
 import { musicPlay } from "./components/music/play.js";
+import { musicStop } from "./components/music/stop.js";
 
 
 const discordBot = new Discord.Client();
@@ -25,7 +26,7 @@ discordBot.on("message", (message) => {
     } else if (command === "penis") {
         message.channel.send(penisCommand());
     } else if (command === "stop") {
-        discordBot.components.get(musicStop());
+        musicStop(message, args);
     } else if (command === "play") {
         musicPlay(message, args);
     } else if (command === "destroy") {
