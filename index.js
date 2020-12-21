@@ -19,7 +19,7 @@ discordBot.on("message", (message) => {
   if (command === "truth") {
     message.channel.send("Ben is gay");
   } else if (command === "lie") {
-    message.channel.send("The one who typed that command is gay");
+    message.channel.send(message.author.username + " is a beeg burd");
   } else if (command === "penis") {
     penisCommand(message, args);
   } else if (command === "ping") {
