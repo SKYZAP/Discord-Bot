@@ -1,4 +1,4 @@
 export const penisCommand = (args) => {
-  const length = "2";
-  return length;
+  const length = Math.floor(Math.random() * 24);
+  return length.toString();
 };
