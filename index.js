@@ -27,13 +27,4 @@ discordBot.on("message", (message) => {
   }
 });
 
-// discordBot.on("message", () => {
-//   let args = message.content.substring(PREFIX.length).split(" ");
-
-//   switch (args[0]) {
-//     case "react":
-//       break;
-//   }
-// });
-
 discordBot.login("NzkwMTQ5Nzk4MjA4NDcxMDcw.X98aWA.d7g3Rctihpnw6tiIl41dlZ2qowQ");
