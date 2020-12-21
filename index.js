@@ -1,4 +1,5 @@
 import { penisCommand } from "./components/penis/index.js";
+import { pingCommand } from "./components/ping/index.js";
 import Discord from "discord.js";
 
 const discordBot = new Discord.Client();
@@ -16,11 +17,13 @@ discordBot.on("message", (message) => {
   const command = args.shift().toLowerCase();
 
   if (command === "truth") {
-    message.channel.send("ben is gay");
+    message.channel.send("Ben is gay");
   } else if (command === "lie") {
-    message.channel.send("the one who typed that command is gay");
+    message.channel.send("The one who typed that command is gay");
   } else if (command === "penis") {
-    message.channel.send(penisCommand());
+    penisCommand(message, args);
+  } else if (command === "ping") {
+    pingCommand(message, args);
   }
 });
 
