@@ -1,6 +1,8 @@
 import { penisCommand } from "./components/penis/index";
 import { pingCommand } from "./components/ping/index";
 import { playMusic } from "./components/music/index";
+import { musicDestroy } from "./components/music/index";
+import { musicSkip } from "./components/music/index";
 
 const DiscordBotApp = () => {
   const Discord = require("discord.js");
@@ -22,11 +24,10 @@ const DiscordBotApp = () => {
       message.channel.send(`Now playing ${track.title}...`)
     )
     .on("trackAdd", (message, track) => {
-      console.log("TRACK:", track);
       const queueLength = track.tracks.length - 1;
       message.channel.send(
         `${track.tracks[queueLength].title} has now been queued...`
-      );
+      )
     });
 
   discordBot.on("message", (message) => {
@@ -46,7 +47,9 @@ const DiscordBotApp = () => {
     } else if (command === "play") {
       playMusic(discordBot, message, args);
     } else if (command === "skip") {
-      discordBot.player.skip(message);
+      musicSkip(discordBot, message);
+    } else if (command === "destroy") {
+      musicDestroy(discordBot, message);
     }
   });
 
