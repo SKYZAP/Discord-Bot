@@ -5,7 +5,11 @@ export const playMusic = async (discordBot, message, args) => {
     if (!voiceChannel)
       return message.channel.send("You need to be in the voice channel");
 
-    if (args[0].startsWith("https") || args[0].startsWith("http")) {
+    if (args[0].startsWith("https://open.spotify.com/")) {
+      console.log("SPOTIFY");
+      await voiceChannel.join();
+      discordBot.player.play(message, args[0]);
+    } else if (args[0].startsWith("https") || args[0].startsWith("http")) {
       await voiceChannel.join();
       discordBot.player.play(message, args[0]);
     }
