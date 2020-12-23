@@ -22,7 +22,6 @@ const DiscordBotApp = () => {
       message.channel.send(`Now playing ${track.title}...`)
     )
     .on("trackAdd", (message, track) => {
-      console.log("TRACK:", track);
       const queueLength = track.tracks.length - 1;
       message.channel.send(
         `${track.tracks[queueLength].title} has now been queued...`
