@@ -1,30 +1,34 @@
+const ytdl = require('ytdl-core');
+const ytSearch = require('yt-search');
+
 export const playMusic = async (discordBot, message, args) => {
-  try {
-    console.log(args[0]);
-    const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel)
-      return message.channel.send("You need to be in the voice channel");
+  const voiceChannel = message.memeber.voice.channel;
 
-    if (args[0].startsWith("https") || args[0].startsWith("http")) {
-      await voiceChannel.join();
-      discordBot.player.play(message, args[0]);
-    }
-    const video = await videoFinder(args.join(" "));
+  if (!voiceChannel) return message.channel.send("You need to be in the voice channel to use this command");
+  const permissions = voiceChannel.permissionsFor(message.client.user);
+  if (!permissions.has('CONNECT')) return message.channel.send("You dont have the correct permissions");
+  if (!permissions.has('SPEAK')) return message.channel.send("You dont have the correct permissions");
+  if (!args.length) return message.channel.send("You need to send the title");
 
-    if (video) {
-      await voiceChannel.join();
-      discordBot.player.play(message, video.url);
-    } else {
-      message.channel.send("No video results");
-    }
-  } catch (error) {
-    console.log("ERROR ===> ", error);
+  const connection = await voiceChannel.join();
+
+  const videoFinder = async (query) => {
+    const videoResult = await ytSearch(query);
+
+    return (videoResult.videos.lenth > 1) ? videoResult.videos[0] : null;
+
   }
-};
+  const video = await videoFinder(args.join(" "));
 
-const videoFinder = async (query) => {
-  const ytSearch = require("yt-search");
-  const videoResult = await ytSearch(query);
+  if (video) {
+    const stream = ytdl(video.url, { filter: 'audoonly' });
+    connection.play(stream, { seek: 0, volume: 1 })
+      .on('finish', () => {
+        voiceChannel.leave();
+      });
 
-  return videoResult.videos.length > 1 ? videoResult.videos[0] : null;
+    await message.reply(`Now playing ${video.title}`);
+  } else {
+    message.channel.send("Video cannot be found");
+  }
 };
