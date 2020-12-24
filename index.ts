@@ -45,7 +45,7 @@ const DiscordBotApp = () => {
     } else if (command === "ping") {
       pingCommand(message, args);
     } else if (command === "play") {
-      playMusic(message, args);
+      playMusic(discordBot, message, args);
     } else if (command === "skip") {
       musicSkip(discordBot, message);
     } else if (command === "destroy") {
