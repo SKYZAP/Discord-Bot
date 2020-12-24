@@ -1,6 +1,6 @@
 import { penisCommand } from "./components/penis/index";
 import { pingCommand } from "./components/ping/index";
-import { playMusic, musicQueue, musicResume, musicPause, musicSkip, musicDestroy } from "./components/music/index";
+import { playMusic, musicQueue, musicResume, musicPause, musicSkip, musicDestroy, musicClearQ } from "./components/music/index";
 
 
 
@@ -58,6 +58,8 @@ const DiscordBotApp = () => {
       musicResume(discordBot, message);
     } else if (command === "queue") {
       musicQueue(discordBot, message);
+    } else if (command === "clear queue") {
+      musicClearQ(discordBot, message);
     }
   });
 

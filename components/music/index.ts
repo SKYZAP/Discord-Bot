@@ -69,3 +69,7 @@ export const musicQueue = async (discordBot, message) => {
   })
   console.log(queue);
 }
+
+export const musicClearQ = async (discordBot, message) => {
+  const clearQ = discordBot.player.clearQueue(message);
+}
