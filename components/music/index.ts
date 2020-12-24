@@ -72,4 +72,5 @@ export const musicQueue = async (discordBot, message) => {
 
 export const musicClearQ = async (discordBot, message) => {
   discordBot.player.clearQueue(message);
+  message.channel.send(`The queue has been cleared`);
 }
