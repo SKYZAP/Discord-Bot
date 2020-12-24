@@ -73,7 +73,6 @@ export const TwitterApp = async (message, args) => {
   try {
     // Gets the user Id for the username typed out by the user
     const results = await client.get("users/by", { usernames: `${args[0]}` });
-    console.log("User =", results.data);
     const id = results.data[0].id;
     // Created a tweet stream to get the 10 latest tweets for said user
     const stream = await client.stream(`users/${await id}/tweets`, {
@@ -84,9 +83,7 @@ export const TwitterApp = async (message, args) => {
 
     for await (const { data } of stream) {
       // Maps the data being streamed from the API into the data variable
-      console.log(data);
       const length = await data.length;
-      console.log("LENGTH ", length);
 
       for (var i = 0; i < length; i++) {
         // Loops through the data variable to print out the tweets in a formatted manner
