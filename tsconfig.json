@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2016","DOM"],
+    "target": "es6",
+    "moduleResolution": "node"
+  },
+  "include": ["app.ts", "index.ts"],
+  "exclude": ["node_modules", "build"]
+}
