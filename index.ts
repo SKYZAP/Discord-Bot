@@ -85,11 +85,16 @@ export const TwitterApp = async (message, args) => {
       console.log("LENGTH ", length);
 
       for (var i = 0; i < length; i++) {
+        const start = await data[i].text.indexOf("https://t");
+        const end = await data[i].text.length;
+        const newText = await data[i].text.slice(0, start);
+        const newLink = await data[i].text.slice(start, end);
         if (i === 0)
           message.channel.send(
             "===================================================================================================================="
           );
-        message.channel.send(await data[i].text);
+        message.channel.send("***" + newText + "***\n");
+        message.channel.send(await newLink);
         message.channel.send(
           "===================================================================================================================="
         );
