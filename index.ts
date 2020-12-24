@@ -1,13 +1,8 @@
 import { penisCommand } from "./components/penis/index";
 import { pingCommand } from "./components/ping/index";
-import { playMusic } from "./components/music/index";
-import { musicDestroy } from "./components/music/index";
-import { musicSkip } from "./components/music/index";
-import { musicPause } from "./components/music/index";
-import { musicRemove } from "./components/music/index";
-import { musicResume } from "./components/music/index";
-import { musicQueue } from "./components/music/index";
-// import { Track } from ""
+import { playMusic, musicQueue, musicResume, musicPause, musicSkip, musicDestroy } from "./components/music/index";
+
+
 
 const DiscordBotApp = () => {
   const Discord = require("discord.js");
@@ -33,8 +28,7 @@ const DiscordBotApp = () => {
       message.channel.send(
         `${track.tracks[queueLength].title} has now been queued...`
       )
-    }).on("remove", (message, track) =>
-      message.channel.send(`Song ${track.title} has been removed`));
+    })
 
   discordBot.on("message", (message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -58,8 +52,8 @@ const DiscordBotApp = () => {
       musicDestroy(discordBot, message);
     } else if (command === "pause") {
       musicPause(discordBot, message);
-    } else if (command === "remove") {
-      musicRemove(discordBot, message);
+      // } else if (command === "remove") {
+      //   musicRemove(discordBot, message, track);
     } else if (command === "resume") {
       musicResume(discordBot, message);
     } else if (command === "queue") {

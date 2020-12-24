@@ -1,4 +1,4 @@
-
+import _ from "lodash";
 
 export const playMusic = async (discordBot, message, args) => {
   try {
@@ -45,9 +45,15 @@ export const musicPause = async (discordBot, message) => {
   message.channel.send("The song is now on pause");
 }
 
-export const musicRemove = async (discordBot, message) => {
-  discordBot.player.remove(message);
-}
+// export const musicRemove = async (discordBot, message, track) => {
+//   const remove = discordBot.player.remove(message, track);
+//   remove.track.map((q, index) => {
+//     if (q.index[" "] === "remove")
+//       index - remove;
+//     message.channel.send("The song has been removed");
+//   })
+//   console.log(remove);
+// }
 
 export const musicResume = async (discordBot, message) => {
   discordBot.player.resume(message);
@@ -55,5 +61,11 @@ export const musicResume = async (discordBot, message) => {
 
 export const musicQueue = async (discordBot, message) => {
   const queue = discordBot.player.getQueue(message);
+  queue.tracks.map((q, index) => {
+    if (index === 0)
+      message.channel.send("======================");
+    message.channel.send("[" + index + "]" + "\t|||" + "\t " + q.title);
+    message.channel.send("======================");
+  })
   console.log(queue);
 }
