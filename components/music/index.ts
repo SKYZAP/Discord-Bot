@@ -1,9 +1,8 @@
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 
-export const playMusic = async (discordBot, message, args) => {
-<<<<<<< HEAD
-  const voiceChannel = message.memeber.voice.channel;
+export const playMusic = async (message, args) => {
+  const voiceChannel = message.member.voice.channel;
 
   if (!voiceChannel) return message.channel.send("You need to be in the voice channel to use this command");
   const permissions = voiceChannel.permissionsFor(message.client.user);
@@ -15,40 +14,14 @@ export const playMusic = async (discordBot, message, args) => {
 
   const videoFinder = async (query) => {
     const videoResult = await ytSearch(query);
+    console.log(query);
+    return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
 
-    return (videoResult.videos.lenth > 1) ? videoResult.videos[0] : null;
-
-=======
-  try {
-    console.log(args[0]);
-    const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel)
-      return message.channel.send("You need to be in the voice channel");
-
-    if (args[0].startsWith("https://open.spotify.com/")) {
-      console.log("SPOTIFY");
-      await voiceChannel.join();
-      discordBot.player.play(message, args[0]);
-    } else if (args[0].startsWith("https") || args[0].startsWith("http")) {
-      await voiceChannel.join();
-      discordBot.player.play(message, args[0]);
-    }
-    const video = await videoFinder(args.join(" "));
-
-    if (video) {
-      await voiceChannel.join();
-      discordBot.player.play(message, video.url);
-    } else {
-      message.channel.send("No video results");
-    }
-  } catch (error) {
-    console.log("ERROR ===> ", error);
->>>>>>> 35db101091d8b9a93e5f60eb77324f2e0a4f2ea8
   }
   const video = await videoFinder(args.join(" "));
 
   if (video) {
-    const stream = ytdl(video.url, { filter: 'audoonly' });
+    const stream = ytdl(video.url, { filter: 'audioonly' });
     connection.play(stream, { seek: 0, volume: 1 })
       .on('finish', () => {
         voiceChannel.leave();
