@@ -1,3 +1,5 @@
+
+
 export const playMusic = async (discordBot, message, args) => {
   try {
     const voiceChannel = message.member.voice.channel;
@@ -36,4 +38,22 @@ export const musicDestroy = async (discordBot, message) => {
 export const musicSkip = async (discordBot, message) => {
   discordBot.player.skip(message);
   message.channel.send("The song has been skipped");
+}
+
+export const musicPause = async (discordBot, message) => {
+  discordBot.player.pause(message);
+  message.channel.send("The song is now on pause");
+}
+
+export const musicRemove = async (discordBot, message) => {
+  discordBot.player.remove(message);
+}
+
+export const musicResume = async (discordBot, message) => {
+  discordBot.player.resume(message);
+}
+
+export const musicQueue = async (discordBot, message) => {
+  const queue = discordBot.player.getQueue(message);
+  console.log(queue);
 }
