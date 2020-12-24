@@ -46,6 +46,8 @@ const DiscordBotApp = () => {
       playMusic(discordBot, message, args);
     } else if (command === "skip") {
       discordBot.player.skip(message);
+    } else if (command === "tweethere") {
+      TwitterApp(message, args);
     }
   });
 
@@ -55,3 +57,46 @@ const DiscordBotApp = () => {
 };
 
 export default DiscordBotApp;
+
+export const TwitterApp = async (message, args) => {
+  const Twitter = require("twitter-v2");
+
+  const client = new Twitter({
+    consumer_key: "qSNpJrFaC9Q8xz5XKisXrF7CE",
+    consumer_secret: "1gHTs2gsPxUzUrH61QQ6jSqbm4kzLePw5OvCQFlV4JGAq1cjbR",
+    access_token_key: "2351301588-LwwoaxH8mFNrvfHE0cdByvppGXkc5XKgiGad9Fc",
+    access_token_secret: "xpkTD9K6Tvs4HATuy7UWY14NNVFNCmx248ubyLXTSbPRL",
+  });
+
+  try {
+    const results = await client.get("users/by", { usernames: `${args[0]}` });
+    console.log("User =", results.data);
+    const id = results.data[0].id;
+
+    const stream = await client.stream(`users/${await id}/tweets`, {
+      exclude: "retweets,replies",
+    });
+
+    message.channel.send("Sending Tweets...");
+
+    for await (const { data } of stream) {
+      console.log(data);
+      const length = await data.length;
+      console.log("LENGTH ", length);
+
+      for (var i = 0; i < length; i++) {
+        if (i === 0)
+          message.channel.send(
+            "===================================================================================================================="
+          );
+        message.channel.send(await data[i].text);
+        message.channel.send(
+          "===================================================================================================================="
+        );
+      }
+    }
+  } catch (error) {
+    message.channel.send("Failed to get tweets...");
+    console.log("ERROR ", error);
+  }
+};
