@@ -71,5 +71,5 @@ export const musicQueue = async (discordBot, message) => {
 }
 
 export const musicClearQ = async (discordBot, message) => {
-  const clearQ = discordBot.player.clearQueue(message);
+  discordBot.player.clearQueue(message);
 }
