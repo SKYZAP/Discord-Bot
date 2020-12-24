@@ -3,6 +3,8 @@ import { pingCommand } from "./components/ping/index";
 import { playMusic } from "./components/music/index";
 
 const DiscordBotApp = () => {
+  const dotenv = require("dotenv");
+  dotenv.config();
   const Discord = require("discord.js");
   const discordBot = new Discord.Client();
 
@@ -51,21 +53,21 @@ const DiscordBotApp = () => {
     }
   });
 
-  discordBot.login(
-    "NzkwMTQ5Nzk4MjA4NDcxMDcw.X98aWA.d7g3Rctihpnw6tiIl41dlZ2qowQ"
-  );
+  discordBot.login(process.env.DISCORD_TOKEN);
 };
 
 export default DiscordBotApp;
 
 export const TwitterApp = async (message, args) => {
+  const dotenv = require("dotenv");
+  dotenv.config();
   const Twitter = require("twitter-v2");
   //Twitter Client Credential Declarations
   const client = new Twitter({
-    consumer_key: "qSNpJrFaC9Q8xz5XKisXrF7CE",
-    consumer_secret: "1gHTs2gsPxUzUrH61QQ6jSqbm4kzLePw5OvCQFlV4JGAq1cjbR",
-    access_token_key: "2351301588-LwwoaxH8mFNrvfHE0cdByvppGXkc5XKgiGad9Fc",
-    access_token_secret: "xpkTD9K6Tvs4HATuy7UWY14NNVFNCmx248ubyLXTSbPRL",
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
   });
   //Error Catching Statement For Twitter API Query
   try {
