@@ -5,3 +5,12 @@ workflows:
   node-tests:
     jobs:
       - node/test
+  build and deploy:
+    jobs:
+      filters:
+        branches:
+          only:
+            - circleci-project-setup
+        steps:
+          - run:
+            command: npm start
