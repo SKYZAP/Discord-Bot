@@ -1,8 +1,14 @@
 import { penisCommand } from "./components/penis/index";
 import { pingCommand } from "./components/ping/index";
-import { playMusic, musicQueue, musicResume, musicPause, musicSkip, musicDestroy, musicClearQ } from "./components/music/index";
-
-
+import {
+  playMusic,
+  musicQueue,
+  musicResume,
+  musicPause,
+  musicSkip,
+  musicDestroy,
+  musicClearQ,
+} from "./components/music/index";
 
 const DiscordBotApp = () => {
   const Discord = require("discord.js");
@@ -27,8 +33,8 @@ const DiscordBotApp = () => {
       const queueLength = track.tracks.length - 1;
       message.channel.send(
         `${track.tracks[queueLength].title} has now been queued...`
-      )
-    })
+      );
+    });
 
   discordBot.on("message", (message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -58,7 +64,7 @@ const DiscordBotApp = () => {
       musicResume(discordBot, message);
     } else if (command === "queue") {
       musicQueue(discordBot, message);
-    } else if (command === "clear queue") {
+    } else if (command === "clearq") {
       musicClearQ(discordBot, message);
     }
   });
