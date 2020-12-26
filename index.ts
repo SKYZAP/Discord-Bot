@@ -13,16 +13,17 @@ import {
 const DiscordBotApp = () => {
   const Discord = require("discord.js");
   const discordBot = new Discord.Client();
+  const chalk = require("chalk");
 
   // Music Player Setup
   const { Player } = require("discord-player");
   const player = new Player(discordBot);
   discordBot.player = player;
 
-  const prefix = "+";
+  const prefix = "/";
 
   discordBot.once("ready", () => {
-    console.log("[BerdBot] Ready to go!");
+    console.log(chalk.keyword("limegreen")("[BerdBot] - Ready to go!"));
   });
 
   discordBot.player
