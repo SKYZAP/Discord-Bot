@@ -58,7 +58,7 @@ const DiscordBotApp = () => {
       musicResume(discordBot, message);
     } else if (command === "queue") {
       musicQueue(discordBot, message);
-    } else if (command === "clear queue") {
+    } else if (command === "clearq") {
       musicClearQ(discordBot, message);
     }
   });

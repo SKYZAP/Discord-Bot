@@ -61,17 +61,16 @@ export const musicResume = async (discordBot, message) => {
 
 export const musicQueue = async (discordBot, message) => {
   const queue = discordBot.player.getQueue(message);
+  if (_.isEmpty(queue.tracks)) {
+    message.channel.send("There are no upcoming songs")
+  }
   queue.tracks.map((q, index) => {
-    if (!queue) {
-      message.channel.send("There are no upcoming songs");
-    } else if (index === 0)
+    if (index === 0)
       message.channel.send("======================");
     message.channel.send("[" + index + "]" + "\t|||" + "\t " + q.title);
     message.channel.send("======================");
-
-
-  })
-  console.log(queue);
+  });
+  console.log(queue.tracks);
 }
 
 export const musicClearQ = async (discordBot, message) => {
