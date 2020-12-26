@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { isEmptyBindingElement } from "typescript";
 
 export const playMusic = async (discordBot, message, args) => {
   try {
@@ -33,17 +34,17 @@ const videoFinder = async (query) => {
 export const musicDestroy = async (discordBot, message) => {
   discordBot.player.stop(message);
   message.channel.send("I'll be back");
-}
+};
 
 export const musicSkip = async (discordBot, message) => {
   discordBot.player.skip(message);
   message.channel.send("The song has been skipped");
-}
+};
 
 export const musicPause = async (discordBot, message) => {
   discordBot.player.pause(message);
   message.channel.send("The song is now on pause");
-}
+};
 
 // export const musicRemove = async (discordBot, message, track) => {
 //   const remove = discordBot.player.remove(message, track);
@@ -57,23 +58,22 @@ export const musicPause = async (discordBot, message) => {
 
 export const musicResume = async (discordBot, message) => {
   discordBot.player.resume(message);
-}
+};
 
 export const musicQueue = async (discordBot, message) => {
-  const queue = discordBot.player.getQueue(message);
-  if (_.isEmpty(queue.tracks)) {
-    message.channel.send("There are no upcoming songs")
+  const queue = await discordBot.player.getQueue(message);
+  if (queue.tracks.length === 0) {
+    message.channel.send("There are no upcoming songs");
   }
   queue.tracks.map((q, index) => {
-    if (index === 0)
-      message.channel.send("======================");
+    if (index === 0) message.channel.send("======================");
     message.channel.send("[" + index + "]" + "\t|||" + "\t " + q.title);
     message.channel.send("======================");
   });
   console.log(queue.tracks);
-}
+};
 
 export const musicClearQ = async (discordBot, message) => {
   discordBot.player.clearQueue(message);
   message.channel.send(`The queue has been cleared`);
-}
+};
