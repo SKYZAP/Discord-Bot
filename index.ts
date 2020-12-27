@@ -8,6 +8,7 @@ import {
   musicSkip,
   musicDestroy,
   musicClearQ,
+  musicRemove,
 } from "./components/music/index";
 
 const DiscordBotApp = () => {
@@ -35,6 +36,12 @@ const DiscordBotApp = () => {
       message.channel.send(
         `> [QUEUE] ${track.tracks[queueLength].title} has now been queued...`
       );
+    })
+    .on("searchResults", (message) => {
+      message.channel.send(`> [SEARCH] Currently searching`);
+    })
+    .on("noResults", (message) => {
+      message.channel.send(`> [SEARCH] No search results`);
     });
 
   discordBot.on("message", (message) => {
@@ -59,8 +66,8 @@ const DiscordBotApp = () => {
       musicDestroy(discordBot, message);
     } else if (command === "pause") {
       musicPause(discordBot, message);
-      // } else if (command === "remove") {
-      //   musicRemove(discordBot, message, track);
+    } else if (command === "remove") {
+      musicRemove(discordBot, message, args);
     } else if (command === "resume") {
       musicResume(discordBot, message);
     } else if (command === "queue") {
