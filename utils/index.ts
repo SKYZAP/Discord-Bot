@@ -8,10 +8,7 @@ export const log = (msg, color) => {
   console.log(chalk.keyword(`${color}`)(msg));
 };
 
-export const getUserFromMention = (mention) => {
-  const Discord = require("discord.js");
-  const discordBot = new Discord.Client();
-
+export const getUserFromMention = (mention, discordBot) => {
   if (!mention) return;
 
   if (mention.startsWith("<@") && mention.endsWith(">")) {
