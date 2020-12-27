@@ -125,6 +125,10 @@ export const musicQueue = async (discordBot, message) => {
     message.channel.send("> [QUEUE] There are no upcoming songs");
   }
 
+  if (!queue) {
+    message.channel.send("> [QUEUE] There is no music queue");
+  }
+
   queue.tracks.map((q, index) => {
     if (index === 0) {
       queueMessage.push(
