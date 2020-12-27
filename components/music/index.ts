@@ -119,14 +119,27 @@ export const musicResume = async (discordBot, message) => {
 
 export const musicQueue = async (discordBot, message) => {
   const queue = await discordBot.player.getQueue(message);
-  if (queue.tracks.length === 0) {
-    message.channel.send("There are no upcoming songs");
+  let queueMessage: String[] = [];
+
+  if (queue.tracks.length === 0 || queue.tracks === undefined) {
+    message.channel.send("> [QUEUE] There are no upcoming songs");
   }
+
   queue.tracks.map((q, index) => {
-    if (index === 0) message.channel.send("======================");
-    message.channel.send("[" + index + "]" + "\t|||" + "\t " + q.title);
-    message.channel.send("======================");
+    if (index === 0) {
+      queueMessage.push(
+        `>>> ======================================================================= \n [${index}]  \t\t${q.title} \n =======================================================================`
+      );
+    } else {
+      queueMessage.push(
+        ` [${index}]  \t\t${q.title} \n =======================================================================`
+      );
+    }
+    // if (index === 0) message.channel.send("====================== \n");
+    // message.channel.send("[" + index + "]" + "\t|||" + "\t " + q.title);
+    // message.channel.send("======================");
   });
+  message.channel.send(queueMessage);
   log(
     "[BerdBot] - " +
       message.author.username +
