@@ -28,12 +28,12 @@ const DiscordBotApp = () => {
 
   discordBot.player
     .on("trackStart", (message, track) =>
-      message.channel.send(`Now playing ${track.title}...`)
+      message.channel.send(`> [PLAY] Now playing ${track.title}...`)
     )
     .on("trackAdd", (message, track) => {
       const queueLength = track.tracks.length - 1;
       message.channel.send(
-        `${track.tracks[queueLength].title} has now been queued...`
+        `> [QUEUE] ${track.tracks[queueLength].title} has now been queued...`
       );
     });
 
