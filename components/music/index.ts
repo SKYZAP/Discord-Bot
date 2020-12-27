@@ -21,7 +21,7 @@ export const playMusic = async (discordBot, message, args) => {
 
 export const musicDestroy = async (discordBot, message) => {
   discordBot.player.stop(message);
-  message.channel.send("[DISCONNECT] I'll be back");
+  message.channel.send("> [DISCONNECT] I'll be back");
   log(
     "[BerdBot] - " +
       message.author.username +
@@ -34,7 +34,7 @@ export const musicDestroy = async (discordBot, message) => {
 
 export const musicSkip = async (discordBot, message) => {
   discordBot.player.skip(message);
-  message.channel.send("[SKIPPED] The current song has been skipped");
+  message.channel.send("> [SKIPPED] The current song has been skipped");
   log(
     "[BerdBot] - " +
       message.author.username +
@@ -47,7 +47,7 @@ export const musicSkip = async (discordBot, message) => {
 
 export const musicPause = async (discordBot, message) => {
   discordBot.player.pause(message);
-  message.channel.send("[PAUSED] The song is now paused");
+  message.channel.send("> [PAUSED] The song is now paused");
   log(
     "[BerdBot] - " +
       message.author.username +
@@ -61,7 +61,7 @@ export const musicPause = async (discordBot, message) => {
 export const musicRemove = async (discordBot, message, args) => {
   const removedTrack = discordBot.player.remove(message, parseInt(args[0]));
 
-  message.channel.send(`[REMOVED] ${removedTrack.title} has been removed`);
+  message.channel.send(`> [REMOVED] ${removedTrack.title} has been removed`);
 
   log(
     "[BerdBot] - " +
