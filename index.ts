@@ -48,7 +48,7 @@ const DiscordBotApp = () => {
     } else if (command === "lie") {
       message.channel.send(message.author.username + " is a beeg burd");
     } else if (command === "penis") {
-      penisCommand(message, args);
+      penisCommand(discordBot, message, args);
     } else if (command === "ping") {
       pingCommand(message, args);
     } else if (command === "play") {
