@@ -10,10 +10,16 @@ import {
   musicClearQ,
   musicRemove,
 } from "./components/music/index";
+import { helpCommand } from "./components/help/index";
 
 const DiscordBotApp = () => {
   const Discord = require("discord.js");
-  const discordBot = new Discord.Client();
+  const discordBot = new Discord.Client({
+    presence: {
+      status: "online",
+      activity: { name: "/help", type: "LISTENING" },
+    },
+  });
   const chalk = require("chalk");
 
   // Music Player Setup
@@ -74,6 +80,8 @@ const DiscordBotApp = () => {
       musicQueue(discordBot, message);
     } else if (command === "clearq") {
       musicClearQ(discordBot, message);
+    } else if (command === "help") {
+      helpCommand(discordBot, message, args);
     }
   });
 
