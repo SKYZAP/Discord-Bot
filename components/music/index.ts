@@ -8,10 +8,10 @@ export const playMusic = async (discordBot, message, args) => {
 
     log(
       "[BerdBot] - " +
-        message.author.username +
-        " is playing a song in " +
-        message.channel.name +
-        " channel",
+      message.author.username +
+      " is playing a song in " +
+      message.channel.name +
+      " channel",
       "lightblue"
     );
   } catch (error) {
@@ -24,10 +24,10 @@ export const musicDestroy = async (discordBot, message) => {
   message.channel.send("> [DISCONNECT] I'll be back");
   log(
     "[BerdBot] - " +
-      message.author.username +
-      " disconnected the bot from " +
-      message.channel.name +
-      " channel",
+    message.author.username +
+    " disconnected the bot from " +
+    message.channel.name +
+    " channel",
     "lightblue"
   );
 };
@@ -37,10 +37,10 @@ export const musicSkip = async (discordBot, message) => {
   message.channel.send("> [SKIPPED] The current song has been skipped");
   log(
     "[BerdBot] - " +
-      message.author.username +
-      " skipped a song from " +
-      message.channel.name +
-      " channel",
+    message.author.username +
+    " skipped a song from " +
+    message.channel.name +
+    " channel",
     "lightblue"
   );
 };
@@ -50,37 +50,41 @@ export const musicPause = async (discordBot, message) => {
   message.channel.send("> [PAUSED] The song is now paused");
   log(
     "[BerdBot] - " +
-      message.author.username +
-      " paused a song from " +
-      message.channel.name +
-      " channel",
+    message.author.username +
+    " paused a song from " +
+    message.channel.name +
+    " channel",
     "lightblue"
   );
 };
 
 export const musicRemove = async (discordBot, message, args) => {
-  const removedTrack = discordBot.player.remove(message, parseInt(args[0]));
+  const num = parseInt(args[0]);
+  if (num === 0) {
+    musicSkip(discordBot, message);
+  } else {
+    const removedTrack = discordBot.player.remove(message, parseInt(args[0]));
+    message.channel.send(`> [REMOVED] ${removedTrack.title} has been removed`);
 
-  message.channel.send(`> [REMOVED] ${removedTrack.title} has been removed`);
-
-  log(
-    "[BerdBot] - " +
+    log(
+      "[BerdBot] - " +
       message.author.username +
       " removed a song from queue in " +
       message.channel.name +
       " channel",
-    "lightblue"
-  );
+      "lightblue"
+    );
+  };
 };
 
 export const musicResume = async (discordBot, message) => {
   discordBot.player.resume(message);
   log(
     "[BerdBot] - " +
-      message.author.username +
-      " resumed a song from " +
-      message.channel.name +
-      " channel",
+    message.author.username +
+    " resumed a song from " +
+    message.channel.name +
+    " channel",
     "lightblue"
   );
 };
@@ -111,10 +115,10 @@ export const musicQueue = async (discordBot, message) => {
   message.channel.send(queueMessage);
   log(
     "[BerdBot] - " +
-      message.author.username +
-      " viewed the queue in " +
-      message.channel.name +
-      " channel",
+    message.author.username +
+    " viewed the queue in " +
+    message.channel.name +
+    " channel",
     "lightblue"
   );
 };
@@ -124,10 +128,10 @@ export const musicClearQ = async (discordBot, message) => {
   message.channel.send(`The queue has been cleared`);
   log(
     "[BerdBot] - " +
-      message.author.username +
-      " cleared the song queue in " +
-      message.channel.name +
-      " channel",
+    message.author.username +
+    " cleared the song queue in " +
+    message.channel.name +
+    " channel",
     "lightblue"
   );
 };
