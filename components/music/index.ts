@@ -1,19 +1,26 @@
+import { Channel, VoiceBroadcast } from "discord.js";
 import _ from "lodash";
 import { log } from "../../utils/index";
 
 export const playMusic = async (discordBot, message, args) => {
   try {
-    const search = args.join(" ");
-    discordBot.player.play(message, search);
-
-    log(
-      "[BerdBot] - " +
-      message.author.username +
-      " is playing a song in " +
-      message.channel.name +
-      " channel",
-      "lightblue"
-    );
+    const voiceChannel = message.member.voice.channel;
+    if (message.channel.type === "dm") {
+      message.channel.send("You need to be in the channel to play songs")
+    } else if (!voiceChannel) {
+      message.channel.send("You need to be in the voice channel to play songs")
+    } else {
+      const search = args.join(" ");
+      discordBot.player.play(message, search);
+      log(
+        "[BerdBot] - " +
+        message.author.username +
+        " is playing a song in " +
+        message.channel.name +
+        " channel",
+        "lightblue"
+      );
+    }
   } catch (error) {
     log("[BerdBot] - " + error.message, "red");
   }
