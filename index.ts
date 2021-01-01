@@ -12,9 +12,8 @@ import {
 } from "./components/music/index";
 import { helpCommand } from "./components/help/index";
 
-
 const DiscordBotApp = () => {
-  require('dotenv').config();
+  require("dotenv").config();
   const Discord = require("discord.js");
   const discordBot = new Discord.Client({
     presence: {
@@ -29,7 +28,7 @@ const DiscordBotApp = () => {
   const player = new Player(discordBot);
   discordBot.player = player;
 
-  const prefix = "+";
+  const prefix = "/";
 
   discordBot.once("ready", () => {
     console.log(chalk.keyword("limegreen")("[BerdBot] - Ready to go!"));
@@ -87,9 +86,7 @@ const DiscordBotApp = () => {
     }
   });
 
-  discordBot.login(
-    process.env.TOKEN
-  );
+  discordBot.login(process.env.TOKEN);
 };
 
 export default DiscordBotApp;
