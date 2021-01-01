@@ -24,8 +24,5 @@
     "ytdl-core": "^4.3.0",
     "ytpl": "^2.0.4",
     "dotenv": "^8.2.0"
-  },
-  "devDependencies": {
-    "dotenv": "^8.2.0"
   }
 }
