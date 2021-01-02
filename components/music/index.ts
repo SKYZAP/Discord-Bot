@@ -236,3 +236,60 @@ export const musicClearQ = async (discordBot, message) => {
     log("[BerdBot] - " + error.message, "red");
   }
 };
+
+export const toggleFilter = async (discordBot, message, args) => {
+  try {
+    const command = args[0].toString().toLowerCase();
+    let bool;
+    let action;
+
+    if (args[1].toLowerCase() === "true") {
+      bool = true;
+    } else {
+      bool = false;
+    }
+
+    if (command === "bass") {
+      discordBot.player.setFilters(message, { bassboost: bool });
+      action = "Bass";
+    } else if (command === "nightcore") {
+      discordBot.player.setFilters(message, { nightcore: bool });
+      action = "Nightcore";
+    } else if (command === "vibrato") {
+      discordBot.player.setFilters(message, { vibrato: bool });
+      action = "Vibrato";
+    }
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " toggled the " +
+        action +
+        " filter, in the " +
+        message.channel.name +
+        " channel",
+      "lightblue"
+    );
+  } catch (error) {
+    log("[BerdBot] - " + error.message, "red");
+  }
+};
+
+export const resetFilter = async (discordBot, message) => {
+  try {
+    discordBot.player.setFilters(message, {
+      bassboost: false,
+      nightcore: false,
+      vibrato: false,
+    });
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " resetted the filters in the " +
+        message.channel.name +
+        " channel",
+      "lightblue"
+    );
+  } catch (error) {
+    log("[BerdBot] - " + error.message, "red");
+  }
+};
