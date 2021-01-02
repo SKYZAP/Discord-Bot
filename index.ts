@@ -9,6 +9,8 @@ import {
   musicDestroy,
   musicClearQ,
   musicRemove,
+  toggleFilter,
+  resetFilter,
 } from "./components/music/index";
 import { helpCommand } from "./components/help/index";
 
@@ -28,7 +30,7 @@ const DiscordBotApp = () => {
   const player = new Player(discordBot);
   discordBot.player = player;
 
-  const prefix = "/";
+  const prefix = "-";
 
   discordBot.once("ready", () => {
     console.log(chalk.keyword("limegreen")("[BerdBot] - Ready to go!"));
@@ -83,6 +85,10 @@ const DiscordBotApp = () => {
       musicClearQ(discordBot, message);
     } else if (command === "help") {
       helpCommand(discordBot, message, args);
+    } else if (command === "filter") {
+      toggleFilter(discordBot, message, args);
+    } else if (command === "reset") {
+      resetFilter(discordBot, message);
     }
   });
 
