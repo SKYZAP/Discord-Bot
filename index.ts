@@ -1,5 +1,8 @@
-import { penisCommand } from "./components/penis/index";
-import { pingCommand } from "./components/ping/index";
+import {
+  pingCommand,
+  penisCommand,
+  slapCommand,
+} from "./components/misc/index";
 import {
   playMusic,
   musicQueue,
@@ -89,6 +92,10 @@ const DiscordBotApp = () => {
       toggleFilter(discordBot, message, args);
     } else if (command === "reset") {
       resetFilter(discordBot, message);
+    } else if (command === "feedback") {
+      // message.channel.send("<@!329080429854588928> Ben has been slapped");
+    } else if (command === "slap") {
+      slapCommand(discordBot, message, args);
     }
   });
 
