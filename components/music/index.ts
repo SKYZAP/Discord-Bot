@@ -239,70 +239,75 @@ export const musicClearQ = async (discordBot, message) => {
 
 export const toggleFilter = async (discordBot, message, args) => {
   try {
-    if (args) {
-      const command = args[0].toString().toLowerCase();
-      let bool;
-      let action;
-
-      if (args[1].toLowerCase() === "true") {
-        bool = true;
-      } else {
-        bool = false;
-      }
-
-      const commands = [
-        "bassboost",
-        "nightcore",
-        "vibrato",
-        "8d",
-        "vaporwave",
-        "phaser",
-        "tremolo",
-        "reverse",
-        "treble",
-        "normalizer",
-        "surrounding",
-        "pulsator",
-        "subboost",
-        "karaoke",
-        "flanger",
-        "gate",
-        "haas",
-        "mcompand",
-      ];
-
-      commands.forEach((com) => {
-        if (command === "8d" && com === "8d") {
-          filter = { "8D": com };
-          discordBot.player.setFilters(message, filter);
-          action = com.toUpperCase();
-        } else if (command === com) {
-          var filter = { [com]: com };
-          discordBot.player.setFilters(message, filter);
-          action = com.toUpperCase();
-        } else {
-          message.channel.send(`> [ERROR] Incorrect filter input `);
-        }
-      });
-
-      message.channel.send(`> [${action.toUpperCase()}] Filter set to ${bool}`);
-
-      log(
-        "[BerdBot] - " +
-          message.author.username +
-          " toggled the " +
-          action +
-          " filter, in the " +
-          message.channel.name +
-          " channel",
-        "lightblue"
-      );
+    if (!args[0]) {
+      message.channel.send(`> [ERROR] Incorrect filter input `);
+      return;
     } else if (!discordBot.player.isPlaying(message)) {
       message.channel.send(
         `> [ERROR] Cannot add filter when no songs are being played `
       );
+      return;
     }
-    message.channel.send(`> [ERROR] Incorrect filter input `);
+    const command = args[0].toString().toLowerCase();
+    let bool;
+    let action;
+
+    if (args[1].toLowerCase() === "true") {
+      bool = true;
+    } else {
+      bool = false;
+    }
+
+    const commands = [
+      "bassboost",
+      "nightcore",
+      "vibrato",
+      "8d",
+      "vaporwave",
+      "phaser",
+      "tremolo",
+      "reverse",
+      "treble",
+      "normalizer",
+      "surrounding",
+      "pulsator",
+      "subboost",
+      "karaoke",
+      "flanger",
+      "gate",
+      "haas",
+      "mcompand",
+    ];
+
+    if (!commands.includes(command)) {
+      message.channel.send(`> [ERROR] Filter not available`);
+      return;
+    }
+
+    commands.forEach((com) => {
+      if (command === "8d" && com === "8d") {
+        filter = { "8D": com };
+        discordBot.player.setFilters(message, filter);
+        action = com.toUpperCase();
+      } else if (command === com) {
+        var filter = { [com]: com };
+        discordBot.player.setFilters(message, filter);
+        action = com.toUpperCase();
+      }
+    });
+
+    message.channel.send(`> [${action.toUpperCase()}] Filter set to ${bool}`);
+
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " toggled the " +
+        action +
+        " filter, in the " +
+        message.channel.name +
+        " channel",
+      "lightblue"
+    );
   } catch (error) {
     log("[BerdBot] - " + error.message, "red");
   }
