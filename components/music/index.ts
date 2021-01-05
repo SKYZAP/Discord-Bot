@@ -249,16 +249,41 @@ export const toggleFilter = async (discordBot, message, args) => {
       bool = false;
     }
 
-    if (command === "bass") {
-      discordBot.player.setFilters(message, { bassboost: bool });
-      action = "Bass";
-    } else if (command === "nightcore") {
-      discordBot.player.setFilters(message, { nightcore: bool });
-      action = "Nightcore";
-    } else if (command === "vibrato") {
-      discordBot.player.setFilters(message, { vibrato: bool });
-      action = "Vibrato";
-    }
+    const commands = [
+      "bassboost",
+      "nightcore",
+      "vibrato",
+      "8d",
+      "vaporwave",
+      "phaser",
+      "tremolo",
+      "reverse",
+      "treble",
+      "normalizer",
+      "surrounding",
+      "pulsator",
+      "subboost",
+      "karaoke",
+      "flanger",
+      "gate",
+      "haas",
+      "mcompand",
+    ];
+
+    commands.forEach((com) => {
+      if (command === "8d" && com === "8d") {
+        filter = { "8D": com };
+        discordBot.player.setFilters(message, filter);
+        action = com.toUpperCase();
+      } else if (command === com) {
+        var filter = { [com]: com };
+        discordBot.player.setFilters(message, filter);
+        action = com.toUpperCase();
+      }
+    });
+
+    message.channel.send(`> [${action.toUpperCase()}] Filter set to ${bool}`);
+
     log(
       "[BerdBot] - " +
         message.author.username +
@@ -280,7 +305,23 @@ export const resetFilter = async (discordBot, message) => {
       bassboost: false,
       nightcore: false,
       vibrato: false,
+      "8D": false,
+      vaporwave: false,
+      phaser: false,
+      tremolo: false,
+      reverse: false,
+      treble: false,
+      normalizer: false,
+      surrounding: false,
+      pulsator: false,
+      subboost: false,
+      karaoke: false,
+      flanger: false,
+      gate: false,
+      haas: false,
+      mcompand: false,
     });
+    message.channel.send("> [RESET] Song filters have been reset");
     log(
       "[BerdBot] - " +
         message.author.username +
