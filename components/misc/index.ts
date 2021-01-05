@@ -25,7 +25,7 @@ export const penisCommand = (discordBot, message, args) => {
   );
 };
 
-export const pingCommand = async (message, args) => {
+export const pingCommand = (message, args) => {
   const ping = require("ping");
 
   const channelType = message.channel.name ?? "private message";
