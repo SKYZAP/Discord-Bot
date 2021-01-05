@@ -27,25 +27,7 @@ export const penisCommand = (discordBot, message, args) => {
 
 export const pingCommand = async (message, args) => {
   try {
-    const ping = require("net-ping");
-
-    var options = {
-      networkProtocol: ping.NetworkProtocol.IPv4,
-      packetSize: 16,
-      retries: 1,
-      sessionId: process.pid % 65535,
-      timeout: 2000,
-      ttl: 128,
-    };
-
-    var session = ping.createSession(options);
-
-    session.pingHost("213.179.200.234", function (error, target, sent, rcvd) {
-      var ms = rcvd - sent;
-      if (error) console.log(target + ": " + error.toString());
-      else message.reply("your ping is***" + ms + "ms***");
-    });
-
+    message.reply("Pong!");
     const channelType = message.channel.name ?? "private message";
 
     log(
