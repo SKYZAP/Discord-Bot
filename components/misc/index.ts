@@ -25,17 +25,33 @@ export const penisCommand = (discordBot, message, args) => {
   );
 };
 
+const systemPing = (host, message) => {
+  try {
+    var exec = require("child_process").exec;
+
+    const makePingCall = (error, stdout, stderr) => {
+      const start = stdout.indexOf("time=");
+      const end = stdout.indexOf("TTL=");
+      const output = stdout.slice(start + 5, end);
+      message.reply("Ping data: ***" + output + "***");
+    };
+
+    exec(`ping ${host} -n 1`, makePingCall);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const pingCommand = async (message, args) => {
   try {
     const ping = require("ping");
 
     const channelType = message.channel.name ?? "private message";
-
+    systemPing("singapore841.discord.gg", message);
     var host = "singapore841.discord.gg";
 
     let result = await ping.promise.probe(host);
     console.log("RESULT", result);
-    message.reply("Your ping is ***" + parseInt(await result.avg) + "ms***");
 
     log(
       "[BerdBot] - " +
