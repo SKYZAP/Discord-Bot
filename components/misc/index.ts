@@ -30,13 +30,11 @@ export const pingCommand = async (message, args) => {
 
   const channelType = message.channel.name ?? "private message";
 
-  var hosts = ["singapore841.discord.gg"];
+  var host = "singapore841.discord.gg";
 
-  hosts.forEach(function (host) {
-    ping.promise.probe(host).then(async function (res) {
-      message.reply("Your ping is ***" + parseInt(await res.avg) + "ms***");
-    });
-  });
+  let result = await ping.promise.probe(host);
+  console.log("RESULT", result);
+  message.reply("Your ping is ***" + parseInt(await result.avg) + "ms***");
 
   log(
     "[BerdBot] - " +
