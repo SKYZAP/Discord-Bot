@@ -26,24 +26,28 @@ export const penisCommand = (discordBot, message, args) => {
 };
 
 export const pingCommand = async (message, args) => {
-  const ping = require("ping");
+  try {
+    const ping = require("ping");
 
-  const channelType = message.channel.name ?? "private message";
+    const channelType = message.channel.name ?? "private message";
 
-  var host = "singapore841.discord.gg";
+    var host = "singapore841.discord.gg";
 
-  let result = await ping.promise.probe(host);
-  console.log("RESULT", result);
-  message.reply("Your ping is ***" + parseInt(await result.avg) + "ms***");
+    let result = await ping.promise.probe(host);
+    console.log("RESULT", result);
+    message.reply("Your ping is ***" + parseInt(await result.avg) + "ms***");
 
-  log(
-    "[BerdBot] - " +
-      message.author.username +
-      " used command ping in " +
-      channelType +
-      " channel",
-    "lightblue"
-  );
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " used command ping in " +
+        channelType +
+        " channel",
+      "lightblue"
+    );
+  } catch (error) {
+    log("[BerdBot] - " + error.message, "red");
+  }
 };
 
 export const slapCommand = (discordBot, message, args) => {
