@@ -297,6 +297,10 @@ export const toggleFilter = async (discordBot, message, args) => {
           " channel",
         "lightblue"
       );
+    } else if (!discordBot.player.isPlaying(message)) {
+      message.channel.send(
+        `> [ERROR] Cannot add filter when no songs are being played `
+      );
     }
     message.channel.send(`> [ERROR] Incorrect filter input `);
   } catch (error) {
