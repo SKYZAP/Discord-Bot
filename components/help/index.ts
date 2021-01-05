@@ -5,6 +5,8 @@ export const helpCommand = (discordBot, message, args) => {
     `\n [**Misc:tools:**]` +
     "\n``/penis``" +
     `[(i)](${message.url} "Used as /penis or /penis @User"),` +
+    "``/slap``" +
+    `[(i)](${message.url} "Used as /slap or /slap @User"),` +
     "``/ping``" +
     `[(i)](${message.url} "Used as /ping")\n` +
     `\n [**Music:musical_note:**]` +
