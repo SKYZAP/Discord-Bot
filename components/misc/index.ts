@@ -1,16 +1,29 @@
 import { getUserFromMention, log } from "../../utils/index";
+import { User } from "../database/user/user";
 
 export const penisCommand = (discordBot, message, args) => {
+  const userDb = new User();
   const length = Math.floor(Math.random() * 24);
+
+  const user = userDb.createUser(message, length);
 
   if (args[0]) {
     const user = getUserFromMention(args[0], discordBot);
     if (!user) return message.reply("User not found");
+    const mentionUser = userDb.createUserFromMention(
+      user.id,
+      user.username,
+      length
+    );
     message.channel.send(
-      `<@${user.id}> penis size is ***` + length.toString() + " inches***"
+      `<@${mentionUser.id}> penis size is ***` +
+        mentionUser.length.toString() +
+        " inches***"
     );
   } else {
-    message.reply("your penis size is ***" + length.toString() + " inches***");
+    message.reply(
+      "your penis size is ***" + user.length.toString() + " inches***"
+    );
   }
 
   const channelType = message.channel.name ?? "private message";
