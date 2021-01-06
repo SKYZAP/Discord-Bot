@@ -47,20 +47,25 @@ export class User {
   };
 
   getUser = (id) => {
-    const db = require("better-sqlite3")("main.db");
+    const db = require("better-sqlite3")("main.db", { verbose: console.log });
     const user = db.prepare("SELECT * FROM users WHERE id = ?").get(id);
     return user;
   };
 
   getAllUsers = () => {
-    const db = require("better-sqlite3")("main.db");
+    const db = require("better-sqlite3")("main.db", { verbose: console.log });
     const users = db.prepare("SELECT * FROM users").all();
     return users;
   };
 
   deleteUser = (id) => {
-    const db = require("better-sqlite3")("main.db");
+    const db = require("better-sqlite3")("main.db", { verbose: console.log });
     const user = db.exec(`DELETE FROM users WHERE id = ${id}`);
     return user;
+  };
+
+  deleteAllUsers = () => {
+    const db = require("better-sqlite3")("main.db", { verbose: console.log });
+    db.exec(`DELETE FROM users`);
   };
 }
