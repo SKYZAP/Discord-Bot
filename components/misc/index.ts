@@ -86,7 +86,8 @@ export const slapCommand = (discordBot, message, args) => {
 export const resetLength = (message) => {
   if (
     message.author.id.toString() === "254141160895938560" ||
-    message.author.id.toString() === "113701822966923265"
+    message.author.id.toString() === "113701822966923265" ||
+    message.author.id.toString() === "187939016971124737"
   ) {
     const userDb = new User();
     userDb.deleteUser(message.author.id);
