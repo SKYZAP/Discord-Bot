@@ -1,4 +1,3 @@
-import { updateJsxSpreadAttribute } from "typescript";
 import { getUserFromMention, log } from "../../utils/index";
 import { User } from "../database/user/user";
 
@@ -85,10 +84,14 @@ export const slapCommand = (discordBot, message, args) => {
 };
 
 export const resetLength = (message) => {
-  if (message.author.id === "254141160895938560") {
+  if (
+    message.author.id.toString() === "254141160895938560" ||
+    message.author.id.toString() === "113701822966923265"
+  ) {
     const userDb = new User();
     userDb.deleteUser(message.author.id);
     message.reply("[RESET] Successfully resetted your length");
+  } else {
+    message.reply("[ERROR] You dont have permission to use this command");
   }
-  message.reply("[ERROR] You dont have permission to use this command");
 };
