@@ -2,6 +2,7 @@ import {
   pingCommand,
   penisCommand,
   slapCommand,
+  resetLength,
 } from "./components/misc/index";
 import {
   playMusic,
@@ -96,6 +97,8 @@ const DiscordBotApp = () => {
       // message.channel.send("<@!329080429854588928> Ben has been slapped");
     } else if (command === "slap") {
       slapCommand(discordBot, message, args);
+    } else if (command === "resetLength") {
+      resetLength(message);
     }
   });
 
