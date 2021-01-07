@@ -1,4 +1,5 @@
 import DiscordBotApp from "./index";
+import "reflect-metadata";
 
 try {
   DiscordBotApp();
