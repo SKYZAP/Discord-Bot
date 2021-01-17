@@ -1,28 +1,49 @@
 import { getUserFromMention, log } from "../../utils/index";
-import { User } from "../database/user/user";
+import "reflect-metadata";
+import { getConnection } from "typeorm";
+import { addUser, deleteUser, User } from "../../src/models/user";
+require("dotenv").config();
 
-export const penisCommand = (discordBot, message, args) => {
-  const userDb = new User();
+export const penisCommand = async (discordBot, message, args) => {
   const length = Math.floor(Math.random() * 24);
+  const con = getConnection();
+  const repository = con.getRepository(User);
 
-  const user = userDb.createUser(message, length);
+  let author = await repository.findOne({
+    discordId: message.author.id,
+  });
+
+  if (!author) {
+    addUser(message, length, 0);
+    author = await repository.findOne({ discordId: message.author.id });
+  }
 
   if (args[0]) {
     const user = getUserFromMention(args[0], discordBot);
+
     if (!user) return message.reply("User not found");
-    const mentionUser = userDb.createUserFromMention(
-      user.id,
-      user.username,
-      length
-    );
+
+    console.log("MENTION USER:", user);
+
+    const mentionUser = await repository.findOne({ discordId: user.id });
+
+    if (!mentionUser) {
+      await repository.save({
+        discordId: user.id,
+        username: user.username,
+        length: length,
+        playtime: 0,
+      });
+    }
+
     message.channel.send(
-      `<@${mentionUser.id}> penis size is ***` +
+      `<@${mentionUser.discordId}> penis size is ***` +
         mentionUser.length.toString() +
         " inches***"
     );
   } else {
     message.reply(
-      "your penis size is ***" + user.length.toString() + " inches***"
+      "your penis size is ***" + author.length.toString() + " inches***"
     );
   }
 
@@ -83,14 +104,13 @@ export const slapCommand = (discordBot, message, args) => {
   );
 };
 
-export const resetLength = (message) => {
+export const resetLength = async (message) => {
   if (
     message.author.id.toString() === "254141160895938560" ||
     message.author.id.toString() === "113701822966923265" ||
     message.author.id.toString() === "187939016971124737"
   ) {
-    const userDb = new User();
-    userDb.deleteUser(message.author.id);
+    await deleteUser(message);
     message.reply("[RESET] Successfully resetted your length");
   } else {
     message.reply("[ERROR] You dont have permission to use this command");
