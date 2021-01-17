@@ -35,7 +35,7 @@ export const options: ConnectionOptions = {
   database: process.env.DB_HOST,
   entities: [__dirname + "/../src/models/*.ts"],
   synchronize: true,
-  logging: false,
+  logging: true,
 };
 
 export const createDb = async () => {
