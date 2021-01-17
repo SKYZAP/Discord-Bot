@@ -1,4 +1,4 @@
-import { ConnectionOptions } from "typeorm";
+import { ConnectionOptions, createConnection } from "typeorm";
 
 require("dotenv").config();
 
@@ -33,7 +33,15 @@ export const options: ConnectionOptions = {
   username: process.env.DB_HOST,
   password: process.env.DB_HOST,
   database: process.env.DB_HOST,
-  entities: [__dirname + "/../src/modules/**/*.ts"],
+  entities: [__dirname + "/../src/models/*.ts"],
   synchronize: true,
   logging: false,
+};
+
+export const createDb = async () => {
+  await createConnection(options)
+    .then(() => {
+      log("[Berdbot] - Connection created", "yellow");
+    })
+    .catch((error) => log("[BerdBot] - " + error.message, "red"));
 };
