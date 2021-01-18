@@ -55,7 +55,7 @@ const getOptions = async () => {
     synchronize: false,
     logging: true,
     ssl: {
-      rejectUnauthorized: false,
+      rejectUnauthorized: true,
     },
     extra: {
       ssl: true,
