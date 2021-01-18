@@ -1,6 +1,4 @@
 import { ConnectionOptions, createConnection } from "typeorm";
-import * as pgParse from "pg-connection-string";
-// require("dotenv").config();
 
 export const log = (msg, color) => {
   const chalk = require("chalk");
@@ -26,31 +24,6 @@ export const getUserFromMention = (mention, discordBot) => {
   }
 };
 
-// const getOptions = async () => {
-//   let connectionOptions: ConnectionOptions;
-//   connectionOptions = {
-//     type: "postgres",
-//     synchronize: false,
-//     logging: true,
-//     extra: {
-//       ssl: true,
-//     },
-//     ssl: {
-//       rejectUnauthorized: false,
-//     },
-//     entities: [__dirname + "/../src/models/*.ts"],
-//   };
-//   if (process.env.DATABASE_URL) {
-//     Object.assign(connectionOptions, {
-//       url: process.env.DATABASE_URL.toString(),
-//     });
-//   } else {
-//     connectionOptions = await getConnectionOptions();
-//   }
-
-//   return connectionOptions;
-// };
-
 export const createDb = async () => {
   await createConnection(<ConnectionOptions>{
     type: "postgres",
@@ -63,6 +36,7 @@ export const createDb = async () => {
     },
     url: process.env.DATABASE_URL,
     entities: [__dirname + "/../src/models/*.ts"],
+    migrations: [__dirname + "/../src/migration/*.ts"],
   })
     .then(() => {
       log("[Berdbot] - Connection created", "yellow");
