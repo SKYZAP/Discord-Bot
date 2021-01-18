@@ -78,3 +78,22 @@ export const deleteUser = async (message) => {
     log("[BerdBot] - " + error.message, "red");
   }
 };
+
+export const updateUser = async (message, newUserData) => {
+  try {
+    const con = getConnection();
+    let repository = con.getRepository(User);
+    const user = await repository.findOne({
+      discordId: message.author.id,
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await repository.update({ discordId: user.discordId }, newUserData);
+    log("[BerdBot] - Updated User: " + user.username, "lightblue");
+  } catch (error) {
+    log("[BerdBot] - " + error.message, "red");
+  }
+};
