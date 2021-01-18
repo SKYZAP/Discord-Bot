@@ -60,14 +60,14 @@ export const createDb = async () => {
       ssl: true,
     },
     ssl: {
-      rejectUnauthorized: false ?? false,
+      rejectUnauthorized: false,
     },
-    url: process.env.DATABASE_URL,
-    // host: connectionOptions.host,
-    // port: connectionOptions.port || 5432,
-    // username: connectionOptions.user,
-    // password: connectionOptions.password,
-    // database: connectionOptions.database,
+    // url: process.env.DATABASE_URL,
+    host: connectionOptions.host,
+    port: connectionOptions.port || 5432,
+    username: connectionOptions.user,
+    password: connectionOptions.password,
+    database: connectionOptions.database,
     entities: [__dirname + "/../src/models/*.ts"],
   })
     .then(() => {
