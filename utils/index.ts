@@ -28,11 +28,8 @@ export const getUserFromMention = (mention, discordBot) => {
 
 export const options: ConnectionOptions = {
   type: "postgres",
-  host: process.env.DATABASE_HOST,
+  host: process.env.DATABASE_URL,
   port: parseInt(process.env.DB_PORT),
-  username: process.env.DB_HOST ?? process.env.DB_USER,
-  password: process.env.DB_HOST ?? process.env.DB_PASSWORD,
-  database: process.env.DB_HOST ?? process.env.DB_NAME,
   entities: [__dirname + "/../src/models/*.ts"],
   synchronize: true,
   logging: true,
