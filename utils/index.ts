@@ -52,8 +52,6 @@ export const getUserFromMention = (mention, discordBot) => {
 // };
 
 export const createDb = async () => {
-  // const typeormconfig = await getOptions();
-  const connectionOptions = pgParse.parse(process.env.DATABASE_URL);
   await createConnection(<ConnectionOptions>{
     type: "postgres",
     extra: {
@@ -62,12 +60,7 @@ export const createDb = async () => {
     ssl: {
       rejectUnauthorized: false,
     },
-    // url: process.env.DATABASE_URL,
-    host: connectionOptions.host,
-    port: connectionOptions.port || 5432,
-    username: connectionOptions.user,
-    password: connectionOptions.password,
-    database: connectionOptions.database,
+    url: process.env.DATABASE_URL,
     entities: [__dirname + "/../src/models/*.ts"],
   })
     .then(() => {
