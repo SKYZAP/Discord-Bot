@@ -54,9 +54,6 @@ const getOptions = async () => {
     type: "postgres",
     synchronize: false,
     logging: true,
-    ssl: {
-      rejectUnauthorized: true,
-    },
     extra: {
       ssl: true,
     },
@@ -71,7 +68,10 @@ const getOptions = async () => {
   return connectionOptions;
 };
 
-//const connect2Database = async (): Promise<void> => {};
+const connect2Database = async (): Promise<void> => {
+  const typeormconfig = await getOptions();
+  await createConnection(typeormconfig);
+};
 
 export const createDb = async () => {
   // await createConnection(options)
@@ -80,14 +80,7 @@ export const createDb = async () => {
   //   })
   //   .catch((error) => log("[BerdBot] - " + error.message, "red"));
 
-  const typeormconfig = await getOptions();
-  await createConnection(typeormconfig)
-    .then(() => {
-      log("[Berdbot] - Connection created", "yellow");
-    })
-    .catch((error) => log("[BerdBot] - " + error.message, "red"));
-
-  // await connect2Database().then(async () => {
-  //   log("[BerdBot] - Connected to database", "yellow");
-  // });
+  await connect2Database().then(async () => {
+    log("[BerdBot] - Connected to database", "yellow");
+  });
 };
