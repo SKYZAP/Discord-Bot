@@ -55,17 +55,16 @@ export const createDb = async () => {
   // const typeormconfig = await getOptions();
   const connectionOptions = pgParse.parse(process.env.DATABASE_URL);
   await createConnection(<ConnectionOptions>{
-    driver: {
-      type: "postgres",
-      extra: {
-        ssl: true,
-      },
-      host: connectionOptions.host,
-      port: connectionOptions.port || 5432,
-      username: connectionOptions.user,
-      password: connectionOptions.password,
-      database: connectionOptions.database,
+    type: "postgres",
+    extra: {
+      ssl: true,
     },
+    url: process.env.DATABASE_URL,
+    // host: connectionOptions.host,
+    // port: connectionOptions.port || 5432,
+    // username: connectionOptions.user,
+    // password: connectionOptions.password,
+    // database: connectionOptions.database,
     entities: [__dirname + "/../src/models/*.ts"],
   })
     .then(() => {
