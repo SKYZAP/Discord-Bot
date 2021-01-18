@@ -21,6 +21,7 @@
     "fs": "0.0.1-security",
     "lodash": "^4.17.20",
     "pg": "^8.5.1",
+    "pg-connection-string": "^2.4.0",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^9.1.1",
     "typeorm": "^0.2.29",
