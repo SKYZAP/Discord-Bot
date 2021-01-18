@@ -54,6 +54,9 @@ const getOptions = async () => {
     type: "postgres",
     synchronize: false,
     logging: true,
+    ssl: {
+      rejectUnauthorized: false,
+    },
     extra: {
       ssl: true,
     },
