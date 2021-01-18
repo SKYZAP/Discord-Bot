@@ -45,7 +45,9 @@ const getOptions = async () => {
     entities: [__dirname + "/../src/models/*.ts"],
   };
   if (process.env.DATABASE_URL) {
-    Object.assign(connectionOptions, { url: parse(process.env.DATABASE_URL) });
+    Object.assign(connectionOptions, {
+      url: process.env.DATABASE_URL.toString(),
+    });
   } else {
     connectionOptions = await getConnectionOptions();
   }
