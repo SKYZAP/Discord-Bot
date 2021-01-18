@@ -32,7 +32,7 @@ export const options: ConnectionOptions = {
   port: parseInt(process.env.DB_PORT),
   username: process.env.DB_HOST ?? null,
   password: process.env.DB_HOST ?? null,
-  database: process.env.DB_HOST ?? null,
+  database: process.env.DB_HOST ?? process.env.DB_NAME,
   entities: [__dirname + "/../src/models/*.ts"],
   synchronize: true,
   logging: true,
