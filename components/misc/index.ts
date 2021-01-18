@@ -23,9 +23,7 @@ export const penisCommand = async (discordBot, message, args) => {
 
     if (!user) return message.reply("User not found");
 
-    console.log("MENTION USER:", user);
-
-    const mentionUser = await repository.findOne({ discordId: user.id });
+    let mentionUser = await repository.findOne({ discordId: user.id });
 
     if (!mentionUser) {
       await repository.save({
@@ -34,6 +32,7 @@ export const penisCommand = async (discordBot, message, args) => {
         length: length,
         playtime: 0,
       });
+      mentionUser = await repository.findOne({ discordId: user.id });
     }
 
     message.channel.send(
