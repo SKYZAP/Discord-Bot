@@ -1,9 +1,5 @@
-import {
-  ConnectionOptions,
-  createConnection,
-  getConnectionOptions,
-} from "typeorm";
-const { parse } = require("pg-connection-string");
+import { ConnectionOptions, createConnection } from "typeorm";
+import * as pgParse from "pg-connection-string";
 // require("dotenv").config();
 
 export const log = (msg, color) => {
@@ -30,34 +26,48 @@ export const getUserFromMention = (mention, discordBot) => {
   }
 };
 
-const getOptions = async () => {
-  let connectionOptions: ConnectionOptions;
-  connectionOptions = {
-    type: "postgres",
-    synchronize: false,
-    logging: true,
-    extra: {
-      ssl: true,
-    },
-    ssl: {
-      rejectUnauthorized: false,
-    },
-    entities: [__dirname + "/../src/models/*.ts"],
-  };
-  if (process.env.DATABASE_URL) {
-    Object.assign(connectionOptions, {
-      url: process.env.DATABASE_URL.toString(),
-    });
-  } else {
-    connectionOptions = await getConnectionOptions();
-  }
+// const getOptions = async () => {
+//   let connectionOptions: ConnectionOptions;
+//   connectionOptions = {
+//     type: "postgres",
+//     synchronize: false,
+//     logging: true,
+//     extra: {
+//       ssl: true,
+//     },
+//     ssl: {
+//       rejectUnauthorized: false,
+//     },
+//     entities: [__dirname + "/../src/models/*.ts"],
+//   };
+//   if (process.env.DATABASE_URL) {
+//     Object.assign(connectionOptions, {
+//       url: process.env.DATABASE_URL.toString(),
+//     });
+//   } else {
+//     connectionOptions = await getConnectionOptions();
+//   }
 
-  return connectionOptions;
-};
+//   return connectionOptions;
+// };
 
 export const createDb = async () => {
-  const typeormconfig = await getOptions();
-  await createConnection(typeormconfig)
+  // const typeormconfig = await getOptions();
+  const connectionOptions = pgParse.parse(process.env.DATABASE_URL);
+  await createConnection(<ConnectionOptions>{
+    driver: {
+      type: "postgres",
+      extra: {
+        ssl: true,
+      },
+      host: connectionOptions.host,
+      port: connectionOptions.port || 5432,
+      username: connectionOptions.user,
+      password: connectionOptions.password,
+      database: connectionOptions.database,
+    },
+    entities: [__dirname + "/../src/models/*.ts"],
+  })
     .then(() => {
       log("[Berdbot] - Connection created", "yellow");
     })
