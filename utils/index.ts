@@ -28,12 +28,12 @@ export const createDb = async () => {
   await createConnection(<ConnectionOptions>{
     type: "postgres",
     extra: {
-      ssl: true,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     },
     logging: true,
-    ssl: {
-      rejectUnauthorized: false,
-    },
+    ssl: true,
     url: process.env.DATABASE_URL,
     entities: [__dirname + "/../src/models/*.ts"],
     migrations: [__dirname + "/../src/migration/*.ts"],
