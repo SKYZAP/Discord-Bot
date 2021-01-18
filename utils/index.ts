@@ -57,6 +57,7 @@ export const createDb = async () => {
     extra: {
       ssl: true,
     },
+    logging: true,
     ssl: {
       rejectUnauthorized: false,
     },
