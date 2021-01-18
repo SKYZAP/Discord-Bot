@@ -59,6 +59,9 @@ export const createDb = async () => {
     extra: {
       ssl: true,
     },
+    ssl: {
+      rejectUnauthorized: false,
+    },
     url: process.env.DATABASE_URL,
     // host: connectionOptions.host,
     // port: connectionOptions.port || 5432,
