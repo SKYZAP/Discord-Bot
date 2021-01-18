@@ -1,3 +1,7 @@
+import { ConnectionOptions, createConnection } from "typeorm";
+
+// require("dotenv").config();
+
 export const log = (msg, color) => {
   const chalk = require("chalk");
 
@@ -20,4 +24,24 @@ export const getUserFromMention = (mention, discordBot) => {
 
     return discordBot.users.cache.get(mention);
   }
+};
+
+export const options: ConnectionOptions = {
+  type: "postgres",
+  host: process.env.DATABASE_URL,
+  port: parseInt(process.env.DB_PORT),
+  username: process.env.DB_HOST ?? null,
+  password: process.env.DB_HOST ?? null,
+  database: process.env.DB_HOST ?? null,
+  entities: [__dirname + "/../src/models/*.ts"],
+  synchronize: true,
+  logging: true,
+};
+
+export const createDb = async () => {
+  await createConnection(options)
+    .then(() => {
+      log("[Berdbot] - Connection created", "yellow");
+    })
+    .catch((error) => log("[BerdBot] - " + error.message, "red"));
 };
