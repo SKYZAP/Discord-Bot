@@ -60,7 +60,7 @@ export const createDb = async () => {
       ssl: true,
     },
     ssl: {
-      rejectUnauthorized: false,
+      rejectUnauthorized: false ?? false,
     },
     url: process.env.DATABASE_URL,
     // host: connectionOptions.host,
