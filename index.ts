@@ -38,7 +38,7 @@ const DiscordBotApp = () => {
   const player = new Player(discordBot);
   discordBot.player = player;
 
-  const prefix = "/";
+  const prefix = "//";
 
   discordBot.once("ready", () => {
     console.log(chalk.keyword("limegreen")("[BerdBot] - Ready to go!"));
@@ -109,10 +109,10 @@ const DiscordBotApp = () => {
     }
   });
 
-  cron.schedule("* * * * *", () => {
-    //Runs commands every minute
-    sendReminder(discordBot);
-  });
+  // cron.schedule("* * * * *", () => {
+  //   //Runs commands every minute
+  //   sendReminder(discordBot);
+  // });
 
   discordBot.login(process.env.TOKEN);
 };
