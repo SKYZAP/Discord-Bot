@@ -1,5 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, getConnection } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  getConnection,
+  OneToMany,
+} from "typeorm";
 import { log } from "../../utils";
+import { Reminder } from "./reminder";
 
 @Entity()
 export class User {
@@ -17,6 +24,9 @@ export class User {
 
   @Column()
   playtime: number;
+
+  @OneToMany((type) => Reminder, (reminder) => reminder.user, { eager: true })
+  reminders?: Reminder[];
 }
 
 export const addUser = async (message, length, playtime) => {
