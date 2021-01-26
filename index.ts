@@ -105,7 +105,7 @@ const DiscordBotApp = () => {
       console.log("reset");
       resetLength(message);
     } else if (command === "remind") {
-      //addReminder(discordBot, message, args);
+      addReminder(discordBot, message, args);
     }
   });
 
