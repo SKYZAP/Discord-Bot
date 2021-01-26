@@ -17,10 +17,13 @@ import {
   resetFilter,
 } from "./components/music/index";
 import { helpCommand } from "./components/help/index";
-import { getUser } from "./src/models/user";
+import { addReminder, Reminder } from "./src/models/reminder";
+import { getConnection } from "typeorm";
+import * as moment from "moment";
 
 const DiscordBotApp = () => {
   require("dotenv").config();
+  var cron = require("node-cron");
   const Discord = require("discord.js");
   const discordBot = new Discord.Client({
     presence: {
@@ -35,7 +38,7 @@ const DiscordBotApp = () => {
   const player = new Player(discordBot);
   discordBot.player = player;
 
-  const prefix = "/";
+  const prefix = "-";
 
   discordBot.once("ready", () => {
     console.log(chalk.keyword("limegreen")("[BerdBot] - Ready to go!"));
@@ -101,12 +104,42 @@ const DiscordBotApp = () => {
     } else if (command === "res") {
       console.log("reset");
       resetLength(message);
-    } else if (command === "findme") {
-      getUser(message);
+    } else if (command === "remind") {
+      addReminder(discordBot, message, args);
     }
   });
 
+  cron.schedule("* * * * *", () => {
+    //Runs commands every minute
+    sendReminder(discordBot);
+  });
+
   discordBot.login(process.env.TOKEN);
+};
+
+const sendReminder = async (discordBot) => {
+  const con = getConnection();
+  let repository = con.getRepository(Reminder);
+  const currentTime = moment().seconds(0).milliseconds(0).toDate();
+
+  const reminders = await repository.find();
+  console.log("Reminders have been fetched: " + `${reminders.length}`);
+
+  reminders.map((r) => {
+    const dbTime = moment(r.time).seconds(0).milliseconds(0).toDate();
+    if (moment(currentTime).isSame(dbTime)) {
+      discordBot.users.fetch("113701822966923265").then(async (user) => {
+        await user.send("Hey this thing works");
+      });
+    }
+    console.log("CONDITION: ", moment(currentTime).isSame(dbTime));
+    console.log(
+      "DB TIME: ",
+      dbTime,
+      " ,CURRENT TIME: ",
+      moment(currentTime).toDate()
+    );
+  });
 };
 
 export default DiscordBotApp;
