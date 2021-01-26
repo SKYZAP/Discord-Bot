@@ -66,7 +66,9 @@ export const addReminder = async (discordBot, message, args) => {
     let reminder = new Reminder();
     reminderMsg = reminderMsg.slice(0, timeStart - 7);
     reminder.message = reminderMsg;
-    reminder.time = moment(reminderTime, "DD-MM-YYYY HH:mm").toDate();
+    reminder.time = moment(reminderTime, "DD-MM-YYYY HH:mm")
+      .utc(false)
+      .toDate();
     reminder.userId = userExist.id;
     reminder.user = userExist;
     const saved = await repository.save(reminder);
