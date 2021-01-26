@@ -48,6 +48,7 @@ export const addReminder = async (discordBot, message, args) => {
     let reminderMsg = args.join(" ");
     const timeStart = reminderMsg.indexOf("--time:") + 7;
     let reminderTime = reminderMsg.slice(timeStart, reminderMsg.length);
+    const offset = moment.parseZone(message.createdAt).utcOffset();
 
     // Database connection declaration as well as the repositories needed
     const con = getConnection();
@@ -68,6 +69,7 @@ export const addReminder = async (discordBot, message, args) => {
     reminder.message = reminderMsg;
     reminder.time = moment(reminderTime, "DD-MM-YYYY HH:mm")
       .utc(false)
+      .utcOffset(offset)
       .toDate();
     reminder.userId = userExist.id;
     reminder.user = userExist;
