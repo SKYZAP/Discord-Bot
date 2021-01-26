@@ -120,21 +120,33 @@ const DiscordBotApp = () => {
 const sendReminder = async (discordBot) => {
   const con = getConnection();
   let repository = con.getRepository(Reminder);
-  const currentTime = moment().seconds(0).milliseconds(0).toDate();
+  const currentTime = moment().utc(false).seconds(0).milliseconds(0).toDate();
 
-  const reminders = await repository.find();
+  const reminders = await repository.find({ relations: ["user"] });
   console.log("Reminders have been fetched: " + `${reminders.length}`);
 
   reminders.map((r) => {
-    const dbTime = moment(r.time).seconds(0).milliseconds(0).toDate();
+    const dbTime = moment(r.time)
+      .utc(false)
+      .seconds(0)
+      .milliseconds(0)
+      .toDate();
+
     if (moment(currentTime).isSame(dbTime)) {
-      discordBot.users.fetch("113701822966923265").then(async (user) => {
-        await user.send("Hey this thing works");
+      discordBot.users.fetch(`${r.user.discordId}`).then(async (user) => {
+        await user.send(
+          ":exclamation::exclamation:`Reminder for: " +
+            r.message +
+            " AT " +
+            r.time +
+            "`:exclamation::exclamation:"
+        );
       });
     }
-    console.log("CONDITION: ", moment(currentTime).isSame(dbTime));
     console.log(
-      "DB TIME: ",
+      "CONDITION: ",
+      moment(currentTime).isSame(dbTime),
+      " DB TIME: ",
       dbTime,
       " ,CURRENT TIME: ",
       moment(currentTime).toDate()
