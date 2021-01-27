@@ -56,7 +56,7 @@ export const addReminder = async (discordBot, message, args) => {
     const timeStart = reminderMsg.indexOf("--time:") + 7;
     let reminderTime = reminderMsg.slice(timeStart, reminderMsg.length);
     const offset = moment.parseZone(message.createdAt).utcOffset();
-
+    console.log("CREATED AT: ", message.createdAt);
     // Checks if the Discord user has data within the online database
     let userExist = await userRepository.findOne({
       discordId: message.author.id,
