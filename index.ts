@@ -130,10 +130,7 @@ const sendReminder = async (discordBot) => {
       .utcOffset(r.offset, false)
       .format("DD-MM-YYYY HH:mm");
 
-    const dbTime = moment(r.time)
-      .utc(false)
-      .utcOffset(r.offset, false)
-      .format("DD-MM-YYYY HH:mm");
+    const dbTime = moment(r.time).utc(false).format("DD-MM-YYYY HH:mm");
 
     if (currentTime === dbTime) {
       discordBot.users.fetch(`${r.user.discordId}`).then(async (user) => {
