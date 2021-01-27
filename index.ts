@@ -148,6 +148,14 @@ const sendReminder = async (discordBot) => {
         );
       });
     }
+    console.log(
+      "CURRENT TIME = ",
+      currentTime,
+      " DBTIME = ",
+      dbTime,
+      " CONDITION = ",
+      moment(currentTime).isSame(dbTime)
+    );
   });
 };
 
