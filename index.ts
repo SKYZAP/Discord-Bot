@@ -109,10 +109,10 @@ const DiscordBotApp = () => {
     }
   });
 
-  // cron.schedule("* * * * *", () => {
-  //   //Runs commands every minute
-  //   sendReminder(discordBot);
-  // });
+  cron.schedule("* * * * *", () => {
+    //Runs commands every minute
+    sendReminder(discordBot);
+  });
 
   discordBot.login(process.env.TOKEN);
 };
@@ -120,12 +120,17 @@ const DiscordBotApp = () => {
 const sendReminder = async (discordBot) => {
   const con = getConnection();
   let repository = con.getRepository(Reminder);
-  const currentTime = moment().utc(false).seconds(0).milliseconds(0).toDate();
 
   const reminders = await repository.find({ relations: ["user"] });
   console.log("Reminders have been fetched: " + `${reminders.length}`);
 
   reminders.map((r) => {
+    const currentTime = moment()
+      .utc(false)
+      .utcOffset(r.offset)
+      .seconds(0)
+      .milliseconds(0)
+      .toDate();
     const dbTime = moment(r.time)
       .utc(false)
       .seconds(0)
