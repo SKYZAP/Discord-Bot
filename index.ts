@@ -133,6 +133,7 @@ const sendReminder = async (discordBot) => {
       .toDate();
     const dbTime = moment(r.time)
       .utc(false)
+      .utcOffset(r.offset, false)
       .seconds(0)
       .milliseconds(0)
       .toDate();
