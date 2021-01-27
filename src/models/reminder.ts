@@ -72,7 +72,7 @@ export const addReminder = async (discordBot, message, args) => {
     reminder.message = reminderMsg;
     reminder.time = moment(reminderTime, "DD-MM-YYYY HH:mm")
       .utc(false)
-      .utcOffset(offset, false)
+      .utcOffset(offset === 0 ? 480 : 480, false)
       .toDate();
     reminder.userId = userExist.id;
     reminder.user = userExist;
