@@ -127,7 +127,7 @@ const sendReminder = async (discordBot) => {
   reminders.map((r) => {
     const currentTime = moment()
       .utc(false)
-      .utcOffset(r.offset)
+      .utcOffset(r.offset, false)
       .seconds(0)
       .milliseconds(0)
       .toDate();
