@@ -27,6 +27,9 @@ export class Reminder {
   @Column()
   @RelationId((reminder: Reminder) => reminder.user)
   userId: number;
+
+  @Column()
+  offset: number;
 }
 
 export const getAllReminders = async () => {
@@ -44,15 +47,15 @@ export const getAllReminders = async () => {
 
 export const addReminder = async (discordBot, message, args) => {
   try {
+    // Database connection declaration as well as the repositories needed
+    const con = getConnection();
+    let userRepository = con.getRepository(User);
+
     // Initial reminder argument parsing (To seperate message and time)
     let reminderMsg = args.join(" ");
     const timeStart = reminderMsg.indexOf("--time:") + 7;
     let reminderTime = reminderMsg.slice(timeStart, reminderMsg.length);
     const offset = moment.parseZone(message.createdAt).utcOffset();
-
-    // Database connection declaration as well as the repositories needed
-    const con = getConnection();
-    let userRepository = con.getRepository(User);
 
     // Checks if the Discord user has data within the online database
     let userExist = await userRepository.findOne({
@@ -73,6 +76,7 @@ export const addReminder = async (discordBot, message, args) => {
       .toDate();
     reminder.userId = userExist.id;
     reminder.user = userExist;
+    reminder.offset = offset;
     const saved = await repository.save(reminder);
 
     log("[BerdBot] - Reminder has been saved for: " + saved.time, "lightblue");
