@@ -124,21 +124,18 @@ const sendReminder = async (discordBot) => {
   const reminders = await repository.find({ relations: ["user"] });
   console.log("Reminders have been fetched: " + `${reminders.length}`);
 
-  reminders.map((r) => {
+  reminders.map(async (r) => {
     const currentTime = moment()
       .utc(false)
       .utcOffset(r.offset, false)
-      .seconds(0)
-      .milliseconds(0)
-      .toDate();
+      .format("DD-MM-YYYY HH:mm");
+
     const dbTime = moment(r.time)
       .utc(false)
       .utcOffset(r.offset, false)
-      .seconds(0)
-      .milliseconds(0)
-      .toDate();
+      .format("DD-MM-YYYY HH:mm");
 
-    if (moment(currentTime).isSame(dbTime)) {
+    if (currentTime === dbTime) {
       discordBot.users.fetch(`${r.user.discordId}`).then(async (user) => {
         await user.send(
           ":exclamation::exclamation:`Reminder for: " +
@@ -148,6 +145,7 @@ const sendReminder = async (discordBot) => {
             "`:exclamation::exclamation:"
         );
       });
+      await repository.delete(r);
     }
     console.log(
       "CURRENT TIME = ",
@@ -155,8 +153,9 @@ const sendReminder = async (discordBot) => {
       " DBTIME = ",
       dbTime,
       " CONDITION = ",
-      moment(currentTime).isSame(dbTime)
+      currentTime === dbTime
     );
+    console.log("CC: ", r.offset);
   });
 };
 
