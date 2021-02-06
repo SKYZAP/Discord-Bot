@@ -62,7 +62,13 @@ const DiscordBotApp = () => {
     });
 
   discordBot.on("message", (message) => {
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (!message.content.startsWith(prefix) || message.author.bot) {
+      if (message.content === "Tell me why") {
+        message.reply("Aint nothing but a heartache");
+      } else {
+        return;
+      }
+    }
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -106,6 +112,13 @@ const DiscordBotApp = () => {
       resetLength(message);
     } else if (command === "remind") {
       addReminder(discordBot, message, args);
+    } else if (command === "test") {
+      const newtime = moment(message.createdTimestamp).format();
+      message.reply(
+        `> ***UNIX TIME: ${
+          message.createdTimestamp
+        }, TIME NOW: ${newtime}, UTC OFFSET: ${moment(newtime).utcOffset()}***`
+      );
     }
   });
 
