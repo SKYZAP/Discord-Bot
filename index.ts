@@ -20,6 +20,8 @@ import { helpCommand } from "./components/help/index";
 import { addReminder, Reminder } from "./src/models/reminder";
 import { getConnection } from "typeorm";
 import * as moment from "moment";
+import { RateLimiter } from 'discord.js-rate-limiter';
+
 
 const DiscordBotApp = () => {
   require("dotenv").config();
@@ -32,13 +34,16 @@ const DiscordBotApp = () => {
     },
   });
   const chalk = require("chalk");
+ 
+  //Rate Limiter Setup
+  let rateLimiter = new RateLimiter(1, 2000);
 
   // Music Player Setup
   const { Player } = require("discord-player");
   const player = new Player(discordBot);
   discordBot.player = player;
 
-  const prefix = "/";
+  const prefix = "-";
 
   discordBot.once("ready", () => {
     console.log(chalk.keyword("limegreen")("[BerdBot] - Ready to go!"));
@@ -66,6 +71,12 @@ const DiscordBotApp = () => {
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
+    let limited = rateLimiter.take(message.author.id);
+      if (limited) {
+          // Send back a message (or you may want to just drop the request)
+          message.channel.send(`You're doing that do often, please try again later!`);
+          return;
+      }
 
     if (command === "truth") {
       message.channel.send("Ben is gay");
