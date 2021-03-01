@@ -90,7 +90,7 @@ const DiscordBotApp = () => {
         "Haikal is very very very very extremely super duperly ghey"
       );
     } else if (command === "lie") {
-      message.channel.send("<!@104691917610037248> is a beeg burd");
+      message.channel.send("<@" + 104691917610037248 + "> is a beeg burd");
     } else if (command === "penis") {
       penisCommand(discordBot, message, args);
     } else if (command === "ping") {
