@@ -3,6 +3,7 @@ import {
   penisCommand,
   slapCommand,
   resetLength,
+  testEmbed,
 } from "./components/misc/index";
 import {
   playMusic,
@@ -87,10 +88,10 @@ const DiscordBotApp = () => {
 
     if (command === "truth") {
       message.channel.send(
-        "Haikal is very very very very extremely super duperly ghey"
+        "Hakim is very very very very extremely super duperly ghey"
       );
     } else if (command === "lie") {
-      message.channel.send("<@104691917610037248> is a beeg burd");
+      message.channel.send("<@407414975376654336> is a beeg burd");
     } else if (command === "penis") {
       penisCommand(discordBot, message, args);
     } else if (command === "ping") {
@@ -127,12 +128,7 @@ const DiscordBotApp = () => {
     } else if (command === "remind") {
       addReminder(discordBot, message, args);
     } else if (command === "test") {
-      const newtime = moment(message.createdTimestamp).format();
-      message.reply(
-        `> ***UNIX TIME: ${
-          message.createdTimestamp
-        }, TIME NOW: ${newtime}, UTC OFFSET: ${moment(newtime).utcOffset()}***`
-      );
+      testEmbed(message);
     }
   });
 
