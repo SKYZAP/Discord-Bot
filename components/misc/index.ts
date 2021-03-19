@@ -2,6 +2,15 @@ import { getUserFromMention, log } from "../../utils/index";
 import "reflect-metadata";
 import { getConnection } from "typeorm";
 import { addUser, deleteUser, User } from "../../src/models/user";
+import { Message, MessageEmbed, MessageType } from "discord.js";
+import {
+  DiscordPrompt,
+  DiscordPromptFunction,
+  MenuEmbed,
+  MenuVisual,
+  PromptNode,
+  PromptRunner,
+} from "discord.js-prompts";
 require("dotenv").config();
 
 export const penisCommand = async (discordBot, message, args) => {
@@ -114,4 +123,34 @@ export const resetLength = async (message) => {
   } else {
     message.reply("[ERROR] You dont have permission to use this command");
   }
+};
+
+export const testEmbed = async (message) => {
+  let MyData;
+  const embed = new MessageEmbed({
+    title: "What is your favorite fruit?",
+  });
+  const askFruitMenu = new MenuEmbed(embed)
+    .addOption("Apple")
+    .addOption("Orange")
+    .addOption("Broccoli", "Broccoli is so tasty, it might as well be a fruit");
+  const askFruitVisual = new MenuVisual(askFruitMenu);
+
+  const askFruitFn: DiscordPromptFunction<String> = async (
+    message: Message,
+    data: String
+  ) => {
+    const { content } = message;
+    if (content === "1") {
+      // apple
+    } else if (content === "2") {
+      // orange
+    } else {
+      // broccoli
+    }
+    return data;
+  };
+
+  const askFruitPrompt = new DiscordPrompt<String>(askFruitVisual, askFruitFn);
+  const askFruitNode = new PromptNode(askFruitPrompt);
 };
