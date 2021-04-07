@@ -129,6 +129,8 @@ const DiscordBotApp = () => {
       addReminder(discordBot, message, args);
     } else if (command === "test") {
       testEmbed(message);
+    } else if (command === "animetiddies"){
+      message.reply("**DAPP**");
     }
   });
 
