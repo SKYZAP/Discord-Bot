@@ -1,7 +1,7 @@
-import { getUserFromMention, log } from "../../utils/index";
+import { getUserFromMention, log } from "../../../utils/index";
 import "reflect-metadata";
 import { getConnection } from "typeorm";
-import { addUser, deleteUser, User } from "../../src/models/user";
+import { addUser, deleteUser, User } from "../../../src/models/user";
 import { Message, MessageEmbed, MessageType } from "discord.js";
 import {
   DiscordPrompt,
@@ -9,7 +9,6 @@ import {
   MenuEmbed,
   MenuVisual,
   PromptNode,
-  PromptRunner,
 } from "discord.js-prompts";
 require("dotenv").config();
 

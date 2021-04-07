@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { log } from "../../utils/index";
+import { log } from "../../../utils/index";
 
 export const playMusic = async (discordBot, message, args) => {
   try {
