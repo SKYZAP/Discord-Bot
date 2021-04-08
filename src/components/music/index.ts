@@ -32,6 +32,8 @@ export const musicDestroy = async (discordBot, message) => {
       message.channel.send(
         "> [ERROR] You need to be in a voice channel to play songs"
       );
+    } else if (!discordBot.player.isPlaying(message)) {
+      discordBot.player.stop(message);
     } else {
       discordBot.player.stop(message);
       message.channel.send("> [DISCONNECT] I'll be back");
