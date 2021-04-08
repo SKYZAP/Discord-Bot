@@ -32,7 +32,7 @@ export const createDb = async () => {
         rejectUnauthorized: false,
       },
     },
-    logging: true,
+    logging: false,
     ssl: true,
     url: process.env.DATABASE_URL,
     entities: [__dirname + "/../src/models/*.ts"],
