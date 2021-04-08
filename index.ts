@@ -3,7 +3,10 @@ import {
   penisCommand,
   slapCommand,
   resetLength,
-  testEmbed,
+  triggeredCommand,
+  cmmCommand,
+  ohNoCommand,
+  opinionCommand,
 } from "./src/components/misc/index";
 import {
   playMusic,
@@ -22,6 +25,9 @@ import { addReminder, Reminder } from "./src/models/reminder";
 import { getConnection } from "typeorm";
 import * as moment from "moment";
 import { RateLimiter } from "discord.js-rate-limiter";
+import { bonkCommand } from "./src/components/bonk";
+const paginationEmbed = require("discord.js-pagination");
+const { MessageEmbed } = require("discord.js");
 
 const DiscordBotApp = () => {
   require("dotenv").config();
@@ -128,7 +134,28 @@ const DiscordBotApp = () => {
     } else if (command === "remind") {
       addReminder(discordBot, message, args);
     } else if (command === "test") {
-      testEmbed(message);
+      const embed1 = new MessageEmbed()
+        .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
+        .setTitle("First Page")
+        .addFields({ name: "Song 1", value: "Queue Position" });
+      const embed2 = new MessageEmbed()
+        .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
+        .setTitle("Second Page")
+        .addFields({ name: "Song 2", value: "Queue Position" });
+
+      // Create an array of embeds
+      const pages = [embed1, embed2];
+      paginationEmbed(message, pages);
+    } else if (command === "bonk") {
+      bonkCommand(discordBot, message, args);
+    } else if (command === "triggered") {
+      triggeredCommand(message);
+    } else if (command === "cmm") {
+      cmmCommand(message, args);
+    } else if (command === "ohno") {
+      ohNoCommand(message, args);
+    } else if (command === "opinion") {
+      opinionCommand(message, args);
     }
   });
 
@@ -145,7 +172,6 @@ const sendReminder = async (discordBot) => {
   let repository = con.getRepository(Reminder);
 
   const reminders = await repository.find({ relations: ["user"] });
-  console.log("Reminders have been fetched: " + `${reminders.length}`);
 
   reminders.map(async (r) => {
     const currentTime = moment()
@@ -167,15 +193,6 @@ const sendReminder = async (discordBot) => {
       });
       await repository.delete(r);
     }
-    console.log(
-      "CURRENT TIME = ",
-      currentTime,
-      " DBTIME = ",
-      dbTime,
-      " CONDITION = ",
-      currentTime === dbTime
-    );
-    console.log("CC: ", r.offset);
   });
 };
 
