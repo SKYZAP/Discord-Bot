@@ -7,6 +7,7 @@ import {
   cmmCommand,
   ohNoCommand,
   opinionCommand,
+  facepalmCommand,
 } from "./src/components/misc/index";
 import {
   playMusic,
@@ -156,6 +157,8 @@ const DiscordBotApp = () => {
       ohNoCommand(message, args);
     } else if (command === "opinion") {
       opinionCommand(message, args);
+    } else if (command === "facepalm") {
+      facepalmCommand(message);
     }
   });
 
