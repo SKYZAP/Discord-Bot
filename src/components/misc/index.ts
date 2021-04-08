@@ -217,7 +217,7 @@ export const jailCommand = async (discordBot, message, args) => {
     log(
       "[BerdBot] - " +
         message.author.username +
-        " used command hitler in " +
+        " used command jail in " +
         channelType +
         " channel",
       "lightblue"
