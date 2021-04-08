@@ -2,7 +2,7 @@ import { getUserFromMention, log } from "../../../utils/index";
 import "reflect-metadata";
 import { getConnection } from "typeorm";
 import { addUser, deleteUser, User } from "../../../src/models/user";
-import { Message, MessageEmbed, MessageType } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import {
   DiscordPrompt,
   DiscordPromptFunction,
@@ -11,6 +11,8 @@ import {
   PromptNode,
 } from "discord.js-prompts";
 require("dotenv").config();
+const canvacord = require("canvacord");
+const Discord = require("discord.js");
 
 export const penisCommand = async (discordBot, message, args) => {
   const length = Math.floor(Math.random() * 24);
@@ -121,6 +123,105 @@ export const resetLength = async (message) => {
     message.reply("[RESET] Successfully resetted your length");
   } else {
     message.reply("[ERROR] You dont have permission to use this command");
+  }
+};
+
+export const triggeredCommand = async (message) => {
+  try {
+    let avatar = message.author.displayAvatarURL({
+      dynamic: false,
+      format: "png",
+    });
+    let image = await canvacord.Canvas.trigger(avatar);
+    let attachment = new Discord.MessageAttachment(image, "triggered.gif");
+    message.channel.send(attachment);
+    const channelType = message.channel.name ?? "private message";
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " used command triggered in " +
+        channelType +
+        " channel",
+      "lightblue"
+    );
+  } catch (error) {
+    log(`[BerdBot] - ${error.message}`, "red");
+  }
+};
+
+export const cmmCommand = async (message, args) => {
+  try {
+    const memeText = args.join(" ");
+    if (memeText.length > 0) {
+      let image = await canvacord.Canvas.changemymind(`${memeText}`);
+      let attachment = new Discord.MessageAttachment(image, "cmm.png");
+      message.channel.send(attachment);
+    } else {
+      message.channel.send("> Please provide text");
+    }
+    const channelType = message.channel.name ?? "private message";
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " used command cmm in " +
+        channelType +
+        " channel",
+      "lightblue"
+    );
+  } catch (error) {
+    log(`[BerdBot] - ${error.message}`, "red");
+  }
+};
+
+export const ohNoCommand = async (message, args) => {
+  try {
+    const memeText = args.join(" ");
+    if (memeText.length > 0) {
+      let image = await canvacord.Canvas.ohno(`${memeText}`);
+      let attachment = new Discord.MessageAttachment(image, "cmm.png");
+      message.channel.send(attachment);
+    } else {
+      message.channel.send("> Please provide text");
+    }
+    const channelType = message.channel.name ?? "private message";
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " used command ohno in " +
+        channelType +
+        " channel",
+      "lightblue"
+    );
+  } catch (error) {
+    log(`[BerdBot] - ${error.message}`, "red");
+  }
+};
+
+export const opinionCommand = async (message, args) => {
+  try {
+    const memeText = args.join(" ");
+    let avatar = message.author.displayAvatarURL({
+      dynamic: false,
+      format: "png",
+    });
+    if (memeText.length > 0) {
+      let image = await canvacord.Canvas.opinion(avatar, `${memeText}`);
+      let attachment = new Discord.MessageAttachment(image, "cmm.png");
+      message.channel.send(attachment);
+    } else {
+      message.channel.send("> Please provide text");
+    }
+    const channelType = message.channel.name ?? "private message";
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " used command opinion in " +
+        channelType +
+        " channel",
+      "lightblue"
+    );
+  } catch (error) {
+    log(`[BerdBot] - ${error.message}`, "red");
   }
 };
 
