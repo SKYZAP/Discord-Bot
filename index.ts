@@ -8,6 +8,8 @@ import {
   ohNoCommand,
   opinionCommand,
   facepalmCommand,
+  hitlerCommand,
+  jailCommand,
 } from "./src/components/misc/index";
 import {
   playMusic,
@@ -159,6 +161,10 @@ const DiscordBotApp = () => {
       opinionCommand(message, args);
     } else if (command === "facepalm") {
       facepalmCommand(message);
+    } else if (command === "hitler") {
+      hitlerCommand(message);
+    } else if (command === "jail") {
+      jailCommand(discordBot, message, args);
     }
   });
 
