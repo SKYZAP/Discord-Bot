@@ -172,6 +172,61 @@ export const facepalmCommand = async (message) => {
   }
 };
 
+export const hitlerCommand = async (message) => {
+  try {
+    let avatar = message.author.displayAvatarURL({
+      dynamic: false,
+      format: "png",
+    });
+    let image = await canvacord.Canvas.hitler(avatar);
+    let attachment = new Discord.MessageAttachment(image, "hitler.png");
+    message.channel.send(attachment);
+    const channelType = message.channel.name ?? "private message";
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " used command hitler in " +
+        channelType +
+        " channel",
+      "lightblue"
+    );
+  } catch (error) {
+    log(`[BerdBot] - ${error.message}`, "red");
+  }
+};
+
+export const jailCommand = async (discordBot, message, args) => {
+  try {
+    let avatar = message.author.displayAvatarURL({
+      dynamic: false,
+      format: "png",
+    });
+    let jailUser;
+
+    if (args[0]) {
+      jailUser = getUserFromMention(args[0], discordBot);
+      if (!jailUser) return message.reply("User not found");
+
+      avatar = jailUser.displayAvatarURL({ dynamic: false, format: "png" });
+    }
+
+    let image = await canvacord.Canvas.jail(avatar, true);
+    let attachment = new Discord.MessageAttachment(image, "jail.png");
+    message.channel.send(attachment);
+    const channelType = message.channel.name ?? "private message";
+    log(
+      "[BerdBot] - " +
+        message.author.username +
+        " used command hitler in " +
+        channelType +
+        " channel",
+      "lightblue"
+    );
+  } catch (error) {
+    log(`[BerdBot] - ${error.message}`, "red");
+  }
+};
+
 export const cmmCommand = async (message, args) => {
   try {
     const memeText = args.join(" ");
