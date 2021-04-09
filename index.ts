@@ -3,13 +3,6 @@ import {
   penisCommand,
   slapCommand,
   resetLength,
-  triggeredCommand,
-  cmmCommand,
-  ohNoCommand,
-  opinionCommand,
-  facepalmCommand,
-  hitlerCommand,
-  jailCommand,
 } from "./src/components/misc/index";
 import {
   playMusic,
@@ -28,9 +21,20 @@ import { addReminder, Reminder } from "./src/models/reminder";
 import { getConnection } from "typeorm";
 import * as moment from "moment";
 import { RateLimiter } from "discord.js-rate-limiter";
-import { bonkCommand } from "./src/components/bonk";
+import { bMov } from "./src/components/meme/bmov";
+import {
+  bonkCommand,
+  cmmCommand,
+  facepalmCommand,
+  hitlerCommand,
+  jailCommand,
+  ohNoCommand,
+  opinionCommand,
+  triggeredCommand,
+} from "./src/components/meme";
 const paginationEmbed = require("discord.js-pagination");
 const { MessageEmbed } = require("discord.js");
+const discordTTS = require("discord-tts");
 
 const DiscordBotApp = () => {
   require("dotenv").config();
@@ -52,7 +56,7 @@ const DiscordBotApp = () => {
   const player = new Player(discordBot);
   discordBot.player = player;
 
-  const prefix = "/";
+  const prefix = "-";
 
   discordBot.once("ready", () => {
     console.log(chalk.keyword("limegreen")("[BerdBot] - Ready to go!"));
@@ -77,8 +81,14 @@ const DiscordBotApp = () => {
 
   discordBot.on("message", (message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) {
-      if (message.content === "Tell me why") {
-        message.reply("Aint nothing but a heartache");
+      if (message.content === "ya like jazz?") {
+        const broadcast = discordBot.voice.createBroadcast();
+        var channelId = message.member.voice.channelID;
+        var channel = discordBot.channels.cache.get(channelId);
+        channel.join().then((connection) => {
+          broadcast.play(discordTTS.getVoiceStream(`${bMov}`));
+          connection.play(broadcast);
+        });
       } else {
         return;
       }
@@ -95,76 +105,134 @@ const DiscordBotApp = () => {
       return;
     }
 
-    if (command === "truth") {
-      message.channel.send(
-        "Hakim is very very very very extremely super duperly ghey"
-      );
-    } else if (command === "lie") {
-      message.channel.send("<@407414975376654336> is a beeg burd");
-    } else if (command === "penis") {
-      penisCommand(discordBot, message, args);
-    } else if (command === "ping") {
-      pingCommand(message, args);
-    } else if (command === "play") {
-      playMusic(discordBot, message, args);
-    } else if (command === "skip") {
-      musicSkip(discordBot, message);
-    } else if (command === "destroy") {
-      musicDestroy(discordBot, message);
-    } else if (command === "pause") {
-      musicPause(discordBot, message);
-    } else if (command === "remove") {
-      musicRemove(discordBot, message, args);
-    } else if (command === "resume") {
-      musicResume(discordBot, message);
-    } else if (command === "queue") {
-      musicQueue(discordBot, message);
-    } else if (command === "clearq") {
-      musicClearQ(discordBot, message);
-    } else if (command === "help") {
-      helpCommand(discordBot, message, args);
-    } else if (command === "filter") {
-      toggleFilter(discordBot, message, args);
-    } else if (command === "reset") {
-      resetFilter(discordBot, message);
-    } else if (command === "feedback") {
-      // message.channel.send("<@!329080429854588928> Ben has been slapped");
-    } else if (command === "slap") {
-      slapCommand(discordBot, message, args);
-    } else if (command === "res") {
-      console.log("reset");
-      resetLength(message);
-    } else if (command === "remind") {
-      addReminder(discordBot, message, args);
-    } else if (command === "test") {
-      const embed1 = new MessageEmbed()
-        .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
-        .setTitle("First Page")
-        .addFields({ name: "Song 1", value: "Queue Position" });
-      const embed2 = new MessageEmbed()
-        .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
-        .setTitle("Second Page")
-        .addFields({ name: "Song 2", value: "Queue Position" });
+    // List of Discord Bot commands
+    switch (command) {
+      case "truth": {
+        message.channel.send(
+          "Hakim is very very very very extremely super duperly ghey"
+        );
+        break;
+      }
+      case "lie": {
+        message.channel.send("<@407414975376654336> is a beeg burd");
+        break;
+      }
+      case "penis": {
+        penisCommand(discordBot, message, args);
+        break;
+      }
+      case "ping": {
+        pingCommand(message, args);
+        break;
+      }
+      case "play": {
+        playMusic(discordBot, message, args);
+        break;
+      }
+      case "skip": {
+        musicSkip(discordBot, message);
+        break;
+      }
+      case "destroy": {
+        musicDestroy(discordBot, message);
+        break;
+      }
+      case "pause": {
+        musicPause(discordBot, message);
+        break;
+      }
+      case "remove": {
+        musicRemove(discordBot, message, args);
+        break;
+      }
+      case "resume": {
+        musicResume(discordBot, message);
+        break;
+      }
+      case "queue": {
+        musicQueue(discordBot, message);
+        break;
+      }
+      case "clearq": {
+        musicClearQ(discordBot, message);
+        break;
+      }
+      case "help": {
+        helpCommand(discordBot, message, args);
+        break;
+      }
+      case "filter": {
+        toggleFilter(discordBot, message, args);
+        break;
+      }
+      case "reset": {
+        resetFilter(discordBot, message);
+        break;
+      }
+      case "feedback": {
+        // message.channel.send("<@!329080429854588928> Ben has been slapped");
+        break;
+      }
+      case "slap": {
+        slapCommand(discordBot, message, args);
+        break;
+      }
+      case "res": {
+        console.log("reset");
+        resetLength(message);
+        break;
+      }
+      case "remind": {
+        addReminder(discordBot, message, args);
+        break;
+      }
+      case "test": {
+        const embed1 = new MessageEmbed()
+          .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
+          .setTitle("First Page")
+          .addFields({ name: "Song 1", value: "Queue Position" });
+        const embed2 = new MessageEmbed()
+          .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
+          .setTitle("Second Page")
+          .addFields({ name: "Song 2", value: "Queue Position" });
 
-      // Create an array of embeds
-      const pages = [embed1, embed2];
-      paginationEmbed(message, pages);
-    } else if (command === "bonk") {
-      bonkCommand(discordBot, message, args);
-    } else if (command === "triggered") {
-      triggeredCommand(message);
-    } else if (command === "cmm") {
-      cmmCommand(message, args);
-    } else if (command === "ohno") {
-      ohNoCommand(message, args);
-    } else if (command === "opinion") {
-      opinionCommand(message, args);
-    } else if (command === "facepalm") {
-      facepalmCommand(message);
-    } else if (command === "hitler") {
-      hitlerCommand(message);
-    } else if (command === "jail") {
-      jailCommand(discordBot, message, args);
+        // Create an array of embeds
+        const pages = [embed1, embed2];
+        paginationEmbed(message, pages);
+        break;
+      }
+      case "bonk": {
+        bonkCommand(discordBot, message, args);
+        break;
+      }
+      case "triggered": {
+        triggeredCommand(message);
+        break;
+      }
+      case "cmm": {
+        cmmCommand(message, args);
+        break;
+      }
+      case "ohno": {
+        ohNoCommand(message, args);
+        break;
+      }
+      case "opinion": {
+        opinionCommand(message, args);
+        break;
+      }
+      case "facepalm": {
+        facepalmCommand(message);
+        break;
+      }
+      case "hitler": {
+        hitlerCommand(message);
+        break;
+      }
+      case "jail": {
+        jailCommand(discordBot, message, args);
+        break;
+      }
     }
   });
 
