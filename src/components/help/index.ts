@@ -22,7 +22,14 @@ export const helpCommand = (discordBot, message, args) => {
     "\n``/filter [filtername] [true/false]``" +
     `[(i)](${message.url} "Available filters:\nbassboost,\nnightcore,\nvibrato,\n8d,\nvaporwave,\nphaser,\ntremolo,\nreverse,\ntreble,\nnormalizer,\nsurrounding,\npulsator,\nsubboost,\nkaraoke,\nflanger,\ngate,\nhaas,\nmcompand"),` +
     "``/reset``" +
-    `[(i)](${message.url} "Used to reset all filters")\n`;
+    `[(i)](${message.url} "Used to reset all filters")` +
+    "\n\n[**Meme:robot:**]\n" +
+    "``/bonk``," +
+    "``/cmm``," +
+    "``/ohno``," +
+    "``/opinion``," +
+    "``/jail``," +
+    "``/hitler``";
   const tooltipEmbed = new Discord.MessageEmbed()
     .setColor("#4287f5")
     .setTitle("**BerdBot Commands**")
