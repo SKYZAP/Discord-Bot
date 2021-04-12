@@ -29,7 +29,9 @@ export const helpCommand = (discordBot, message, args) => {
     "``/ohno``," +
     "``/opinion``," +
     "``/jail``," +
-    "``/hitler``";
+    "``/hitler``," +
+    "``/animetiddies``" +
+    `[(i)](${message.url} "Used for big badonkadonks, really huge honkabadukas, absolutely massive badinkadoinkaronies")`;
   const tooltipEmbed = new Discord.MessageEmbed()
     .setColor("#4287f5")
     .setTitle("**BerdBot Commands**")
