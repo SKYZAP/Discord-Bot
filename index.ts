@@ -233,6 +233,11 @@ const DiscordBotApp = () => {
         jailCommand(discordBot, message, args);
         break;
       }
+      case "animetiddies": {
+        // addTiddies(message, args);
+        message.channel.send("Its Ramadhan my brothas!, no horni");
+        break;
+      }
     }
   });
 
