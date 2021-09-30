@@ -43,7 +43,7 @@ const DiscordBotApp = () => {
   const discordBot = new Discord.Client({
     presence: {
       status: "online",
-      activity: { name: "/help", type: "LISTENING" },
+      activity: { name: "!help", type: "LISTENING" },
     },
   });
   const chalk = require("chalk");
@@ -56,7 +56,7 @@ const DiscordBotApp = () => {
   const player = new Player(discordBot);
   discordBot.player = player;
 
-  const prefix = "~";
+  const prefix = "!";
 
   discordBot.once("ready", () => {
     console.log(chalk.keyword("limegreen")("[BerdBot] - Ready to go!"));
