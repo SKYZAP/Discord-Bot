@@ -56,7 +56,7 @@ const DiscordBotApp = () => {
   const player = new Player(discordBot);
   discordBot.player = player;
 
-  const prefix = "/";
+  const prefix = "~";
 
   discordBot.once("ready", () => {
     console.log(chalk.keyword("limegreen")("[BerdBot] - Ready to go!"));
@@ -64,12 +64,12 @@ const DiscordBotApp = () => {
 
   discordBot.player
     .on("trackStart", (message, track) =>
-      message.channel.send(`> [PLAY] Now playing ${track.title}...`)
+      message.channel.send(`> [PLAY] Now playing ${track.title}...`),
     )
     .on("trackAdd", (message, track) => {
       const queueLength = track.tracks.length - 1;
       message.channel.send(
-        `> [QUEUE] ${track.tracks[queueLength].title} has now been queued...`
+        `> [QUEUE] ${track.tracks[queueLength].title} has now been queued...`,
       );
     })
     .on("searchResults", (message) => {
@@ -100,7 +100,7 @@ const DiscordBotApp = () => {
     if (limited) {
       // Send back a message (or you may want to just drop the request)
       message.channel.send(
-        `You're doing that do often, please try again later!`
+        `You're doing that do often, please try again later!`,
       );
       return;
     }
@@ -109,7 +109,7 @@ const DiscordBotApp = () => {
     switch (command) {
       case "truth": {
         message.channel.send(
-          "Hakim is very very very very extremely super duperly ghey"
+          "Hakim is very very very very extremely super duperly ghey",
         );
         break;
       }
@@ -270,7 +270,7 @@ const sendReminder = async (discordBot) => {
             r.message +
             " AT " +
             r.time +
-            "`:exclamation::exclamation:"
+            "`:exclamation::exclamation:",
         );
       });
       await repository.delete(r);
