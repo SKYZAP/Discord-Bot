@@ -21,4 +21,7 @@ export class Media {
 
   @Column()
   url: string;
+
+  @Column()
+  date: Date;
 }
