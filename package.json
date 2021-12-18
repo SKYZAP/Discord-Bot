@@ -9,8 +9,11 @@
     "update:cmd": "ts-node src/utils/deploy-commands.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "SKYZAP",
   "license": "ISC",
+  "engines": {
+    "node": "17.2.0"
+  },
   "dependencies": {
     "@discordjs/builders": "^0.9.0",
     "@discordjs/opus": "^0.5.3",
