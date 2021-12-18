@@ -41,7 +41,7 @@ export const DiscordClient = () => {
   }
 
   client.once("ready", () => {
-    client.user.setActivity("you....", { type: "WATCHING" });
+    client.user.setActivity("for /ping & /play", { type: "WATCHING" });
     console.log("[BerdBot] - Ready!");
   });
 
