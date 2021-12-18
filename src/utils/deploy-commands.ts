@@ -25,7 +25,7 @@ export const DeployCommands = () => {
       .then((reg) => {
         while (i < commands.length) {
           console.log(
-            `Successfully registered ${reg[i].name} application commands.`,
+            `Successfully registered ${reg[i].name} application command.`,
           );
           i += 1;
         }
