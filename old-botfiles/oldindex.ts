@@ -3,6 +3,7 @@ import {
   penisCommand,
   slapCommand,
   resetLength,
+  testQ,
 } from "./src/components/misc/index";
 import {
   playMusic,
@@ -33,18 +34,19 @@ import {
   triggeredCommand,
 } from "./src/components/meme";
 const paginationEmbed = require("discord.js-pagination");
-const { MessageEmbed } = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const discordTTS = require("discord-tts");
 
 const DiscordBotApp = () => {
   require("dotenv").config();
   var cron = require("node-cron");
-  const Discord = require("discord.js");
-  const discordBot = new Discord.Client({
+  // const Discord = require("discord.js");
+  const discordBot = new Client({
     presence: {
       status: "online",
       activity: { name: "!help", type: "LISTENING" },
     },
+    intents: [Intents.FLAGS.GUILDS],
   });
   const chalk = require("chalk");
 
@@ -79,7 +81,22 @@ const DiscordBotApp = () => {
       message.channel.send(`> [SEARCH] No search results`);
     });
 
-  discordBot.on("message", (message) => {
+  // NEW CODE
+  discordBot.on("interactionCreate", async (interaction) => {
+    if (!interaction.isCommand()) return;
+
+    const { commandName } = interaction;
+
+    if (commandName === "ping") {
+      await interaction.reply("Pong!");
+    } else if (commandName === "server") {
+      await interaction.reply("Server info.");
+    } else if (commandName === "user") {
+      await interaction.reply("User info.");
+    }
+  });
+
+  discordBot.on("interactionCreate", (message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) {
       if (message.content === "ya like jazz?") {
         const broadcast = discordBot.voice.createBroadcast();
@@ -187,18 +204,19 @@ const DiscordBotApp = () => {
         break;
       }
       case "test": {
-        const embed1 = new MessageEmbed()
-          .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
-          .setTitle("First Page")
-          .addFields({ name: "Song 1", value: "Queue Position" });
-        const embed2 = new MessageEmbed()
-          .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
-          .setTitle("Second Page")
-          .addFields({ name: "Song 2", value: "Queue Position" });
+        // const embed1 = new MessageEmbed()
+        //   .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
+        //   .setTitle("First Page")
+        //   .addFields({ name: "Song 1", value: "Queue Position" });
+        // const embed2 = new MessageEmbed()
+        //   .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
+        //   .setTitle("Second Page")
+        //   .addFields({ name: "Song 2", value: "Queue Position" });
 
-        // Create an array of embeds
-        const pages = [embed1, embed2];
-        paginationEmbed(message, pages);
+        // // Create an array of embeds
+        // const pages = [embed1, embed2];
+        // paginationEmbed(message, pages);
+        testQ(message, discordBot);
         break;
       }
       case "bonk": {

@@ -1,9 +1,9 @@
-import DiscordBotApp from "./index";
+const { DiscordClient } = require("./index");
 import "reflect-metadata";
 import { createDb } from "./utils";
 
 try {
-  DiscordBotApp();
+  DiscordClient();
   createDb();
 } catch (error) {
   console.log(error);

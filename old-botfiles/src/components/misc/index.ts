@@ -10,6 +10,7 @@ import {
   MenuVisual,
   PromptNode,
 } from "discord.js-prompts";
+const paginationEmbed = require("discord.js-pagination");
 require("dotenv").config();
 
 export const penisCommand = async (discordBot, message, args) => {
@@ -46,11 +47,11 @@ export const penisCommand = async (discordBot, message, args) => {
     message.channel.send(
       `<@${mentionUser.discordId}> penis size is ***` +
         mentionUser.length.toString() +
-        " inches***"
+        " inches***",
     );
   } else {
     message.reply(
-      "your penis size is ***" + author.length.toString() + " inches***"
+      "your penis size is ***" + author.length.toString() + " inches***",
     );
   }
 
@@ -62,7 +63,7 @@ export const penisCommand = async (discordBot, message, args) => {
       " used command penis in " +
       channelType +
       " channel",
-    "lightblue"
+    "lightblue",
   );
 };
 
@@ -77,7 +78,7 @@ export const pingCommand = async (message, args) => {
         " used command ping in " +
         channelType +
         " channel",
-      "lightblue"
+      "lightblue",
     );
   } catch (error) {
     log("[BerdBot] - " + error.message, "red");
@@ -107,7 +108,7 @@ export const slapCommand = (discordBot, message, args) => {
       " used command slap in " +
       channelType +
       " channel",
-    "lightblue"
+    "lightblue",
   );
 };
 
@@ -137,7 +138,7 @@ export const testEmbed = async (message) => {
 
   const askFruitFn: DiscordPromptFunction<String> = async (
     message: Message,
-    data: String
+    data: String,
   ) => {
     const { content } = message;
     if (content === "1") {
@@ -152,4 +153,26 @@ export const testEmbed = async (message) => {
 
   const askFruitPrompt = new DiscordPrompt<String>(askFruitVisual, askFruitFn);
   const askFruitNode = new PromptNode(askFruitPrompt);
+};
+
+export const testQ = async (message, discordBot) => {
+  const queue = await discordBot.player.getQueue(message);
+  const pageCount = Math.ceil(queue.tracks.length / 5);
+  let pages = [];
+  let pg = 1;
+  const embed = new MessageEmbed()
+    .setAuthor("Berd-Bot", `${discordBot.user.displayAvatarURL()}`)
+    .setTitle(`Page 1`);
+
+  queue.tracks.map((q, index) => {
+    embed.addFields({
+      name: "`" + `${index}` + "`",
+      value: `${q.title}`,
+    });
+    if (index % 5 == 0 || index === queue.tracks.length - 1) {
+      pg += 1;
+      pages.push(embed.setTitle(`Page ${pg}`));
+    }
+  });
+  paginationEmbed(message, pages);
 };
