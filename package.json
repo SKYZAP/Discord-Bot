@@ -26,6 +26,7 @@
     "dotenv": "^10.0.0",
     "ffmpeg-static": "^4.4.0",
     "fs": "^0.0.1-security",
+    "lodash": "^4.17.21",
     "opusscript": "^0.0.8",
     "ts-lint": "^4.5.1",
     "ts-node": "^10.4.0",
