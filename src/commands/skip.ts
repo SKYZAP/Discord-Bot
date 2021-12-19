@@ -39,7 +39,7 @@ module.exports = {
       const queue = await player.getQueue(interaction.guildId);
       if (!queue) {
         return await interaction.reply({
-          content: "The queue is not found!",
+          content: "❌ | The queue is not found!",
           ephemeral: true,
         });
       }
