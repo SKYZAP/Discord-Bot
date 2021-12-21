@@ -1,4 +1,5 @@
 import { DeployCommands } from "./deploy-commands";
+import { BerdLog } from "./log";
 
 require("dotenv").config();
 const { Client, Collection, Intents } = require("discord.js");
@@ -63,6 +64,8 @@ export const DiscordClient = () => {
 
       // Await command execution for the specified interaction
       await command.execute(interaction);
+      BerdLog(interaction);
+      // BerdLog(interaction);
     } catch (error) {
       // Logs out appropriate errors in running commands
       console.error(error);
