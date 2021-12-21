@@ -13,6 +13,7 @@ module.exports = {
     ),
   async execute(interaction) {
     try {
+      // Check for voice channel
       if (!interaction.member.voice.channelId)
         return await interaction.reply({
           content: "You are not in a voice channel!",
@@ -27,6 +28,7 @@ module.exports = {
           content: "You are not in my voice channel!",
           ephemeral: true,
         });
+      // Gets song keywords/url
       const query = interaction.options.get("query").value;
       const queue = player.createQueue(interaction.guild, {
         metadata: {

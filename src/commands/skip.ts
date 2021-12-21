@@ -1,39 +1,21 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { player } from "../utils/berdbot-client";
+import { ChannelCheck } from "../utils/music-player";
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("skip")
-    .setDescription("SKIP MOOSIX")
+    .setDescription("Skip current or selected song")
     .addStringOption((option) =>
       option
-        .setName("pos")
+        .setName("position")
         .setDescription("Enter queue position to skip")
-        .setRequired(false)
+        .setRequired(false),
     ),
   async execute(interaction) {
     try {
-      // TODO: Ship this off to util
-      if (!interaction.guild.me.voice.channelId) {
-        return await interaction.reply({
-          content: "I'm not even in the voice channel!",
-          ephemeral: true,
-        });
-      }
-      if (!interaction.member.voice.channelId)
-        return await interaction.reply({
-          content: "You are not in a voice channel!",
-          ephemeral: true,
-        });
-      if (
-        interaction.member.voice.channelId !==
-        interaction.guild.me.voice.channelId
-      )
-        return await interaction.reply({
-          content: "You are not in my voice channel!",
-          ephemeral: true,
-        });
-      // TODO: Up until here <<<
+      // Check for voice channel
+      ChannelCheck(interaction);
 
       // Actual /skip function
       const queue = await player.getQueue(interaction.guildId);
