@@ -20,7 +20,7 @@ module.exports = {
         });
       }
       // Check queued up songs
-      if (queue.tracks <= 0) {
+      if (queue.tracks.length <= 0) {
         interaction.reply({
           content: "Only 1 song is being played, queue more songs!",
           ephemeral: true,
