@@ -39,7 +39,6 @@ export const DeployCommands = () => {
     guildCommands = _.map(guildCommands, (gc) => {
       return {
         ...gc,
-        name: "dev-" + gc.name,
         description: "[DEV]-" + gc.description,
       };
     });
