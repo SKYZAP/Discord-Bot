@@ -12,7 +12,6 @@ module.exports = {
     ),
   async execute(interaction) {
     const stringt = interaction.options.getString("pingtext");
-    console.log(stringt);
     await interaction.reply(`TEXTS: ${stringt}`);
   },
 };
