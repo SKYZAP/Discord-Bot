@@ -1,17 +1,21 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { player } from "../utils/berdbot-client";
 import { ChannelCheck } from "../utils/music-player";
+import { paginate } from "../utils/paginate";
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("q")
+    .setName("getq")
     .setDescription("Gets all the songs in the queue"),
   async execute(interaction) {
     try {
+      const { MessageEmbed, MessageButton } = require("discord.js");
+      const _ = require("lodash");
+      const paginationEmbed = require("discordjs-button-pagination");
       // Check for voice channel
       ChannelCheck(interaction);
 
-      // Clear function
+      // Gets current queue
       const queue = await player.getQueue(interaction.guildId);
       if (!queue) {
         return await interaction.reply({
@@ -21,17 +25,40 @@ module.exports = {
       }
       // Check queued up songs
       if (queue.tracks.length <= 0) {
-        interaction.reply({
+        return await interaction.reply({
           content: "Only 1 song is being played, queue more songs!",
           ephemeral: true,
         });
       }
 
-      console.log("QUEUE: ", queue);
+      await interaction.deferReply();
+      const qPages = paginate(queue.tracks, 5);
+      const pagesEmbed = [];
 
-      return await interaction.reply({
-        content: `:regional_indicator_x: :regional_indicator_x: :regional_indicator_x: | **IN PROGRESSSS**`,
+      const b2 = new MessageButton()
+        .setCustomId("previousbtn")
+        .setLabel("Previous")
+        .setStyle("DANGER");
+
+      const b1 = new MessageButton()
+        .setCustomId("nextbtn")
+        .setLabel("Next")
+        .setStyle("SUCCESS");
+
+      const buttonList = [b1, b2];
+
+      _.forEach(qPages, (page, index) => {
+        const embed = new MessageEmbed().setTitle(`Queue Page ${index + 1}`);
+        _.forEach(page, (p, i) => {
+          embed.addFields({
+            name: `Song ${i + 1}`,
+            value: `${p.title} by ${p.author}`,
+          });
+        });
+        pagesEmbed.push(embed);
       });
+
+      return await paginationEmbed(interaction, pagesEmbed, buttonList, 120000);
     } catch (error) {
       console.log(error.message);
     }
