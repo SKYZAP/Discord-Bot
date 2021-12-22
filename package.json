@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "update:cmd": "ts-node src/utils/deploy-commands.ts"
+    "update:cmd": "ts-node src/utils/deploy-commands.ts",
+    "delete:cmd": "ts-node src/utils/delete-commands.ts"
   },
   "keywords": [],
   "author": "SKYZAP",
