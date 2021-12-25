@@ -51,7 +51,7 @@ module.exports = {
         const embed = new MessageEmbed().setTitle(`Queue Page ${index + 1}`);
         _.forEach(page, (p, i) => {
           embed.addFields({
-            name: `Song ${i + 1}`,
+            name: `Song ${i + index * 5 + 1}`,
             value: `${p.title} by ${p.author}`,
           });
         });
