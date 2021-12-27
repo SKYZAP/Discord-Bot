@@ -13,6 +13,9 @@ module.exports = {
   logging: false,
   ssl: true,
   url: process.env.DATABASE_URL,
-  entities: [__dirname + "/src/models/*.ts"],
-  migrations: [__dirname + "/src/migration/*.ts"],
+  entities: ["./src/models/*.ts"],
+  migrations: ["./src/migrations/*.ts"],
+  cli: {
+    migrationsDir: "./src/migrations",
+  },
 };
