@@ -20,7 +20,11 @@ module.exports = {
         });
       }
 
-      await queue.destroy(true);
+      if (queue.playing) {
+        await queue.clear();
+      } else {
+        await queue.destroy(true);
+      }
 
       return await interaction.reply({
         content: `:regional_indicator_x: | **Queue has been cleared**`,

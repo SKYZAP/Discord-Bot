@@ -4,14 +4,13 @@ import { ChannelCheck } from "../utils/music-player";
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("skip")
-    .setDescription("Skip current song"),
+    .setName("resume")
+    .setDescription("Resume the current song"),
   async execute(interaction) {
     try {
       // Check for voice channel
       ChannelCheck(interaction);
 
-      // Actual /skip function
       const queue = await player.getQueue(interaction.guildId);
       if (!queue) {
         return await interaction.reply({
@@ -22,16 +21,16 @@ module.exports = {
 
       const npTrack = await queue.nowPlaying();
 
-      if (queue.tracks.length > 0) {
-        await queue.skip();
+      if (queue.playing) {
+        await queue.setPaused(false);
       } else {
         await queue.destroy(true);
       }
 
       return await interaction.reply({
-        content: `⏩ | ${
+        content: `:arrow_forward: | ${
           npTrack ? `Track **${npTrack}` : "**Current track"
-        }** has been skipped!`,
+        }** has been resumed!`,
       });
     } catch (error) {
       console.log(error.message);
