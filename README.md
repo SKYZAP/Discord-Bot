@@ -17,6 +17,7 @@ Discord-Bot
 ├── src                     # Source files
 │   ├── commands            # Command files (for bot functionality)
 │   ├── utils               # Utility files (globally used functions)
+│   ├── models              # Database model files (for typeorm postgres)
 │   └── app.ts   
 ├── Procfile                # Heroku config file
 ├── ffmpeg.exe              # Audio package file
@@ -25,10 +26,26 @@ Discord-Bot
 ```
 ## **3. Environments**
 ### Development
+When the bot script is started, the commands created locally would be registered to the test guild which is the Berd Room Server. The repository was set up to automatically deploy commands to the test server when running the script locally so testing can be done easier.
 ### Production
 When the main branch is updated, Heroku would automatically deploy the new build and in doing so, it will globally register all the commands contained within the bot so no special set up is needed for the production environment
 ## **4. Command Creation**
+- **1. Create a new file with the command as the filename in the commands folder (E.G ping.ts)**
+- **2. Follow the discord.js command format as follows:**
+```
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
+module.exports = {
+  data: new SlashCommandBuilder()              # Slash command data declaration which includes description, options and name
+    .setName("ping")
+    .setDescription("Replies with Pong!"),
+  async execute(interaction) {                 # Async function containing the command logic
+    await interaction.reply(`Ping`);
+  },
+};
+
+```
+- **3. Run the start script and test out the newly created command in the test server (Berd Room). Locally registered commands will have their descriptions prefixed with [DEV]-. Local commands would also update instantly on Discord whenever the script is changed and the bot is restarted**
 ## **5. Database Interaction**
 This project utilizes a PostgreSQL database and interactions with it can be done as follows:
 
@@ -100,5 +117,5 @@ await playerRepo.delete({
   id: UUID
 })
 ```
-
+Additional documentation can be found at: [TypeORM](https://typeorm.io/#/)
 
