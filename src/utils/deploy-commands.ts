@@ -33,32 +33,35 @@ export const DeployCommands = () => {
           }
         })
         .catch(console.error);
+    } else {
+      // Register guild commands
+      let guildCommands = commands;
+      guildCommands = _.map(guildCommands, (gc) => {
+        return {
+          ...gc,
+          description: "[DEV]-" + gc.description,
+        };
+      });
+      rest
+        .put(
+          Routes.applicationGuildCommands(
+            process.env.DISCORD_CLIENTID,
+            process.env.DISCORD_GUILDID,
+          ),
+          {
+            body: guildCommands,
+          },
+        )
+        .then((reg) => {
+          while (i < guildCommands.length) {
+            console.log(
+              `Successfully registered ${reg[i].name} guild command.`,
+            );
+            i += 1;
+          }
+        })
+        .catch(console.error);
     }
-    // Register guild commands
-    let guildCommands = commands;
-    guildCommands = _.map(guildCommands, (gc) => {
-      return {
-        ...gc,
-        description: "[DEV]-" + gc.description,
-      };
-    });
-    rest
-      .put(
-        Routes.applicationGuildCommands(
-          process.env.DISCORD_CLIENTID,
-          process.env.DISCORD_GUILDID,
-        ),
-        {
-          body: guildCommands,
-        },
-      )
-      .then((reg) => {
-        while (i < guildCommands.length) {
-          console.log(`Successfully registered ${reg[i].name} guild command.`);
-          i += 1;
-        }
-      })
-      .catch(console.error);
   } catch (error) {
     console.log(error);
   }
