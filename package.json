@@ -6,8 +6,8 @@
   "scripts": {
     "start": "ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "update:cmd": "ts-node src/utils/deploy-commands.ts",
-    "delete:cmd": "ts-node src/utils/delete-commands.ts",
+    "cmd:update": "ts-node src/utils/deploy-commands.ts",
+    "cmd:delete": "ts-node src/utils/delete-commands.ts",
     "mig:gen": "ts-node ./node_modules/typeorm/cli.js migration:generate --name",
     "mig:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
