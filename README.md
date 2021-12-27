@@ -17,10 +17,12 @@ Discord-Bot
 ├── src                     # Source files
 │   ├── commands            # Command files (for bot functionality)
 │   ├── utils               # Utility files (globally used functions)
+│   ├── migrations          # Database migration files (contains db schema changes)
 │   ├── models              # Database model files (for typeorm postgres)
 │   └── app.ts   
 ├── Procfile                # Heroku config file
 ├── ffmpeg.exe              # Audio package file
+├── ormconfig.ts            # Typeorm database config file
 ├── tsconfig.json           # TypeScript config file
 └── tslint.json             # Typescript linting config file
 ```
@@ -33,7 +35,7 @@ When the main branch is updated, Heroku would automatically deploy the new build
 - **1. Create a new file with the command as the filename in the commands folder (E.G ping.ts)**
 - **2. Follow the discord.js command format as follows:**
 ```
-const { SlashCommandBuilder } = require("@discordjs/builders");
+import { SlashCommandBuilder } from "@discordjs/builders";
 
 module.exports = {
   data: new SlashCommandBuilder()              # Slash command data declaration which includes description, options and name
@@ -46,6 +48,7 @@ module.exports = {
 
 ```
 - **3. Run the start script and test out the newly created command in the test server (Berd Room). Locally registered commands will have their descriptions prefixed with [DEV]-. Local commands would also update instantly on Discord whenever the script is changed and the bot is restarted**
+- **4. Manually register commands with: `npm run cmd:update` and delete registered commands with `npm run cmd:delete`**
 ## **5. Database Interaction**
 This project utilizes a PostgreSQL database and interactions with it can be done as follows:
 
