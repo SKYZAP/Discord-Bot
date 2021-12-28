@@ -26,7 +26,7 @@ module.exports = {
         });
       }
 
-      const npTrack = await queue.nowPlaying();
+      const removedTrack = await queue.tracks[position - 1].title;
 
       if (queue.playing) {
         await queue.remove(position - 1);
@@ -35,9 +35,7 @@ module.exports = {
       }
 
       return await interaction.reply({
-        content: `:x: | ${
-          npTrack ? `Track **${npTrack}` : "**Current track"
-        }** has been removed from queue!`,
+        content: `:x: | Track ${removedTrack} has been removed from queue!`,
       });
     } catch (error) {
       console.log(error.message);
