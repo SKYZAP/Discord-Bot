@@ -19,16 +19,12 @@ module.exports = {
         });
       }
 
-      const npTrack = await queue.nowPlaying();
-
       if (queue.playing) {
         await queue.destroy(true);
       }
 
       return await interaction.reply({
-        content: `:pause_button: | ${
-          npTrack ? `Track **${npTrack}` : "**Current track"
-        }** has been paused!`,
+        content: `:stop_sign: | **Music player has been stopped!!**`,
       });
     } catch (error) {
       console.log(error.message);
