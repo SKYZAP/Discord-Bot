@@ -23,11 +23,11 @@ export const DeleteCommands = () => {
           }
           return Promise.all(promises);
         })
-        .then(console.log("[BerdBot] - Deleted all application commands"));
+        .then(console.log("[BerdBot] - Deleting all application commands"));
     } else {
       rest
         .get(Routes.applicationGuildCommands(clientId, guildId))
-        .then((data) => {
+        .then(async (data) => {
           const promises = [];
           for (const command of data) {
             const deleteUrl = `${Routes.applicationGuildCommands(
@@ -36,9 +36,9 @@ export const DeleteCommands = () => {
             )}/${command.id}`;
             promises.push(rest.delete(deleteUrl));
           }
-          return Promise.all(promises);
+          return await Promise.all(promises);
         })
-        .then(console.log("[BerdBot] - Deleted all guild commands"));
+        .then(console.log("[BerdBot] - Deleting all guild commands"));
     }
   } catch (error) {
     console.log(error.message);
