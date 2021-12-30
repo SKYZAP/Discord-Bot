@@ -42,7 +42,7 @@ export const DiscordClient = () => {
   }
 
   client.once("ready", () => {
-    client.user.setActivity("to music and slap commands!", {
+    client.user.setActivity("/ commands!", {
       type: "LISTENING",
     });
     console.log("[BerdBot] - Ready!");
