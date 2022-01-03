@@ -3,7 +3,7 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("opinion")
-    .setDescription("A really bad opinion!")
+    .setDescription("For bad opinions!")
     .addStringOption((option) =>
       option.setName("text").setDescription("A bad opinion").setRequired(true),
     ),
