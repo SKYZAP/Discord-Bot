@@ -1,3 +1,4 @@
+import { SheeshFunc, SheeshFuncOptions } from "../misc";
 import { DeployCommands } from "./deploy-commands";
 import { BerdLog } from "./log";
 
@@ -48,9 +49,13 @@ export const DiscordClient = () => {
     console.log("[BerdBot] - Ready!");
   });
 
-  // client.on("messageCreate", (message) => {
-  //   console.log("MSG: ", message);
-  // });
+  client.on("messageCreate", async (message) => {
+    const messageString = message.content;
+
+    if (messageString.includes(SheeshFuncOptions)) {
+      await SheeshFunc(message);
+    }
+  });
 
   // Interactions are the new method to run commands for the Discord bot
   client.on("interactionCreate", async (interaction) => {
